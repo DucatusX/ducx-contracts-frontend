@@ -2,36 +2,30 @@ angular.module('app').controller('crowdSalePreviewController', function($timeout
                                                                         openedContract, $scope, $filter) {
     $scope.contract = openedContract.data;
 
+    var tokenTypes = {
+        ERC20: 'DRC20',
+        ERC223: 'DRC223',
+
+    };
+    $scope.contract.contract_details.token_type = tokenTypes[$scope.contract.contract_details.token_type];
 
     $scope.iniContract($scope.contract);
 
     var contractDetails = $scope.contract.contract_details;
 
 
-    switch ($scope.contract.network) {
-        case 1:
-        case 2:
-            $scope.blockchain = 'ETH';
-            $scope.contractCrowdsaleInfo = 'eth_contract_crowdsale';
-            $scope.contractTokenInfo = 'eth_contract_token';
-            break;
-        case 5:
-        case 6:
-            $scope.blockchain = 'NEO';
-            $scope.contractCrowdsaleInfo = 'neo_contract_crowdsale';
-            $scope.contractTokenInfo = 'neo_contract_token';
-            break;
-    }
+    $scope.blockchain = 'DUCX';
+    $scope.contractCrowdsaleInfo = 'ducx_contract_crowdsale';
+    $scope.contractTokenInfo = 'ducx_contract_token';
 
-
-    if (contractDetails.eth_contract_token && contractDetails.eth_contract_token.address) {
+    if (contractDetails.ducx_contract_token && contractDetails.ducx_contract_token.address) {
         web3Service.setProviderByNumber($scope.contract.network);
         var contractWeb3 = web3Service.createContractFromAbi(
-            contractDetails.eth_contract_token.address,
-            contractDetails.eth_contract_token.abi
+            contractDetails.ducx_contract_token.address,
+            contractDetails.ducx_contract_token.abi
         );
 
-        contractWeb3.methods.freezingBalanceOf(contractDetails.admin_address).call(function(error, result) {
+        contractWeb3.methods.freezingBalanceOf(contractDetails.admin_address.toLowerCase()).call(function(error, result) {
             if (error) return;
             if (result * 1) {
                 $scope.tokensFreezed = true;
@@ -40,15 +34,15 @@ angular.module('app').controller('crowdSalePreviewController', function($timeout
         });
     }
 
-    $scope.currencyPow = $scope.blockchain === 'NEO' ? 0 : 18;
+    $scope.currencyPow = 18;
 
-    if (contractDetails.eth_contract_crowdsale && contractDetails.eth_contract_crowdsale.address) {
-        web3Service.setProvider('infura');
-        var contract = web3Service.createContractFromAbi(contractDetails.eth_contract_crowdsale.address, contractDetails.eth_contract_crowdsale.abi);
+    if (contractDetails.ducx_contract_crowdsale && contractDetails.ducx_contract_crowdsale.address) {
+        web3Service.setProvider('infura', $scope.contract.network);
+        var contract = web3Service.createContractFromAbi(contractDetails.ducx_contract_crowdsale.address, contractDetails.ducx_contract_crowdsale.abi);
         if (typeof contract.methods.vault === 'function') {
             contract.methods.vault().call(function(error, result) {
                 if (error) return;
-                contractDetails.eth_contract_crowdsale.vault = result;
+                contractDetails.ducx_contract_crowdsale.vault = result;
                 $scope.$apply();
             });
         }
@@ -130,20 +124,15 @@ angular.module('app').controller('crowdSalePreviewController', function($timeout
         $scope.amountBonusChartData.push(chartItem);
     });
 
-    if ($scope.blockchain === 'ETH') {
-        contractDetails.hard_cap_eth = new BigNumber(contractDetails.hard_cap).div(Math.pow(10,$scope.currencyPow)).round(Math.min(2, contractDetails.decimals)).toString(10);
-        contractDetails.soft_cap_eth = new BigNumber(contractDetails.soft_cap).div(Math.pow(10,$scope.currencyPow)).round(Math.min(2, contractDetails.decimals)).toString(10);
+    contractDetails.hard_cap_eth = new BigNumber(contractDetails.hard_cap).div(Math.pow(10,$scope.currencyPow)).round(Math.min(2, contractDetails.decimals)).toString(10);
+    contractDetails.soft_cap_eth = new BigNumber(contractDetails.soft_cap).div(Math.pow(10,$scope.currencyPow)).round(Math.min(2, contractDetails.decimals)).toString(10);
 
-        contractDetails.hard_cap = new BigNumber(contractDetails.hard_cap).times(contractDetails.rate).div(Math.pow(10,$scope.currencyPow)).round().toString(10);
-        contractDetails.soft_cap = new BigNumber(contractDetails.soft_cap).times(contractDetails.rate).div(Math.pow(10,$scope.currencyPow)).round().toString(10);
+    contractDetails.hard_cap = new BigNumber(contractDetails.hard_cap).times(contractDetails.rate).div(Math.pow(10,$scope.currencyPow)).round().toString(10);
+    contractDetails.soft_cap = new BigNumber(contractDetails.soft_cap).times(contractDetails.rate).div(Math.pow(10,$scope.currencyPow)).round().toString(10);
 
-        contractDetails.min_wei = contractDetails.min_wei !== null ? contractDetails.min_wei : undefined;
-        contractDetails.max_wei = contractDetails.max_wei !== null ? contractDetails.max_wei : undefined;
-    }
-    if ($scope.blockchain === 'NEO') {
-        contractDetails.hard_cap_eth = new BigNumber(contractDetails.hard_cap).round(Math.min(2, contractDetails.decimals)).toString(10);
-        contractDetails.hard_cap = new BigNumber(contractDetails.hard_cap).times(contractDetails.rate).round().toString(10);
-    }
+    contractDetails.min_wei = contractDetails.min_wei !== null ? contractDetails.min_wei : undefined;
+    contractDetails.max_wei = contractDetails.max_wei !== null ? contractDetails.max_wei : undefined;
+
     $scope.timeBonusChartParams = {
         max_time: contractDetails.stop_date,
         min_time: contractDetails.start_date,
@@ -157,10 +146,10 @@ angular.module('app').controller('crowdSalePreviewController', function($timeout
         bonus.max_amount = new BigNumber(bonus.max_amount).div(Math.pow(10,$scope.currencyPow)).round().toString(10);
     });
 
-    if (contractDetails.eth_contract_crowdsale) {
+    if (contractDetails.ducx_contract_crowdsale) {
         contractDetails.sources = {
-            crowdsale: contractDetails.eth_contract_crowdsale.source_code || false,
-            token: contractDetails.eth_contract_token.source_code || false
+            crowdsale: contractDetails.ducx_contract_crowdsale.source_code || false,
+            token: contractDetails.ducx_contract_token.source_code || false
         };
     }
 
@@ -293,16 +282,23 @@ angular.module('app').controller('crowdSalePreviewController', function($timeout
     }
     var methodName = (!startDateIdent && !endDateIdent) ? 'setTimes' : (!startDateIdent ? 'setStartTime' : 'setEndTime');
 
-    var contractInfo = contractDetails[$scope.ngPopUp.params.contract.contract_type !== 4 ? 'eth_contract' : 'eth_contract_crowdsale'];
+    var contractInfo = contractDetails[$scope.ngPopUp.params.contract.contract_type !== 4 ? 'ducx_contract' : 'ducx_contract_crowdsale'];
     var interfaceMethod = web3Service.getMethodInterface(methodName, contractInfo.abi);
     if (!interfaceMethod) return;
 
     $scope.changeDateSignature = (new Web3()).eth.abi.encodeFunctionCall(interfaceMethod, params);
 
     web3Service.getAccounts(contractData.network).then(function(result) {
-        $scope.currentWallet = result.filter(function(wallet) {
-            return wallet.wallet.toLowerCase() === contractDetails.admin_address.toLowerCase();
+        var wallet = result.filter(function(wallet) {
+            return wallet.toLowerCase() === contractDetails.admin_address.toLowerCase();
         })[0];
+
+        if (wallet) {
+            $scope.currentWallet = {
+                type: 'metamask',
+                wallet: wallet
+            };
+        }
         if ($scope.currentWallet) {
             web3Service.setProvider($scope.currentWallet.type, contractData.network);
             contract = web3Service.createContractFromAbi(contractInfo.address, contractInfo.abi);
@@ -577,7 +573,7 @@ angular.module('app').controller('crowdSalePreviewController', function($timeout
 
     var methodName = 'addAddressesToWhitelist';
 
-    var contractInfo = contractDetails[$scope.ngPopUp.params.contract.contract_type !== 4 ? 'eth_contract' : 'eth_contract_crowdsale'];
+    var contractInfo = contractDetails[$scope.ngPopUp.params.contract.contract_type !== 4 ? 'ducx_contract' : 'ducx_contract_crowdsale'];
 
     var interfaceMethod = web3Service.getMethodInterface(methodName, contractInfo.abi);
     try {
@@ -587,9 +583,17 @@ angular.module('app').controller('crowdSalePreviewController', function($timeout
     }
 
     web3Service.getAccounts(contractData.network).then(function(result) {
-        $scope.currentWallet = result.filter(function(wallet) {
-            return wallet.wallet.toLowerCase() === contractDetails.admin_address.toLowerCase();
+
+        var wallet = result.filter(function(wallet) {
+            return wallet.toLowerCase() === contractDetails.admin_address.toLowerCase();
         })[0];
+
+        if (wallet) {
+            $scope.currentWallet = {
+                type: 'metamask',
+                wallet: wallet
+            };
+        }
         if ($scope.currentWallet) {
             web3Service.setProvider($scope.currentWallet.type, contractData.network);
             contract = web3Service.createContractFromAbi(contractInfo.address, contractInfo.abi);

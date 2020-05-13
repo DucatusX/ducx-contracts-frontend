@@ -1,10 +1,10 @@
-<div class="just-text">
-    <i class="icon-help"></i>
-    <a href="https://www.youtube.com/watch?v=kLp9ARRTZug"
-       target="_blank"
-       translate="CONTRACTS.FORMS.WATCH_INSTRUCTION">
-    </a>
-</div>
+<!--<div class="just-text">-->
+    <!--<i class="icon-help"></i>-->
+    <!--<a href="https://www.youtube.com/watch?v=kLp9ARRTZug"-->
+       <!--target="_blank"-->
+       <!--translate="CONTRACTS.FORMS.WATCH_INSTRUCTION">-->
+    <!--</a>-->
+<!--</div>-->
 <div class="shadow-block">
     <div class="shadow-block__content shadow-block__content_min-tb-padding shadow-block__content_no-lr-padding">
         <div class="contract-info__network"
@@ -38,7 +38,7 @@
       ng-class="{'no-active': !contractNameForm.$valid}" name="tokenInfoForm">
     <div class="shadow-block__content" ng-include="getTemplate('pages/createcontract/crowdSale/token_info')"></div>
 </form>
-<form class="shadow-block" ng-if="!token.selectedToken.id && (blockchain !== 'NEO')">
+<form class="shadow-block" ng-if="!token.selectedToken.id">
     <div class="shadow-block__content">
         <div class="form-control-label"
              translate="CONTRACTS.FORMS.TOKEN.FIELDS.TOKEN_TYPE.LABEL"></div>
@@ -50,7 +50,7 @@
                             <input type="radio" id="token_type_20" name="token_type" ng-model="request.token_type" value="ERC20">
                             <span ng-class="{'icon-radio-checked': request.token_type == 'ERC20', 'icon-radio-unchecked': request.token_type !== 'ERC20'}"></span>
                         </label>
-                        <label class="form-control-label inline-label" for="token_type_20">ERC20</label>
+                        <label class="form-control-label inline-label" for="token_type_20">DRC20</label>
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                             <input type="radio" id="token_type_223" name="token_type" ng-model="request.token_type" value="ERC223">
                             <span ng-class="{'icon-radio-checked': request.token_type == 'ERC223', 'icon-radio-unchecked': request.token_type !== 'ERC223'}"></span>
                         </label>
-                        <label class="form-control-label inline-label" for="token_type_223">ERC223</label>
+                        <label class="form-control-label inline-label" for="token_type_223">DRC223</label>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
 </form>
 
 <form class="shadow-block"
-      ng-class="{'no-active': !(tokenInfoForm.$valid && contractNameForm.$valid)}" ng-show="blockchain !== 'NEO'">
+      ng-class="{'no-active': !(tokenInfoForm.$valid && contractNameForm.$valid)}">
     <div ng-include="getTemplate('pages/createcontract/crowdSale/type_of_crowdsale')"></div>
 </form>
 <form class="shadow-block"
@@ -89,25 +89,23 @@
 </form>
 <form class="shadow-block"
       ng-class="{'no-active': !(tokenInfoForm.$valid && contractNameForm.$valid && tokenOwnerForm.$valid)}"
-      name="storageForm" ng-show="blockchain !== 'NEO'">
+      name="storageForm">
     <div ng-include="getTemplate('pages/createcontract/crowdSale/token_storage')"></div>
 </form>
 
 <form class="shadow-block"
-      ng-class="{'no-active': !(tokenInfoForm.$valid && contractNameForm.$valid && tokenOwnerForm.$valid && (storageForm.$valid || (blockchain === 'NEO')))}"
+      ng-class="{'no-active': !(tokenInfoForm.$valid && contractNameForm.$valid && tokenOwnerForm.$valid && storageForm.$valid)}"
       name="saleTokensParamsForm">
     <div ng-include="getTemplate('pages/createcontract/crowdSale/crowdsale_params')"></div>
 </form>
 
 <form class="shadow-block"
-      ng-show="blockchain !== 'NEO'"
       ng-class="{'no-active': !(tokenInfoForm.$valid && contractNameForm.$valid && tokenOwnerForm.$valid && storageForm.$valid && saleTokensParamsForm.$valid)}"
       name="minMaxInvestmentsForm">
     <div ng-include="getTemplate('pages/createcontract/crowdSale/min_max_investments')"></div>
 </form>
 
 <form class="shadow-block"
-      ng-show="blockchain !== 'NEO'"
       ng-class="{'no-active': !(tokenInfoForm.$valid && contractNameForm.$valid && tokenOwnerForm.$valid && storageForm.$valid && saleTokensParamsForm.$valid && minMaxInvestmentsForm.$valid)}"
       name="timeBonusForm">
     <div ng-controller="crowdSaleTimeBonusesController"
@@ -115,7 +113,6 @@
 </form>
 
 <form class="shadow-block"
-      ng-show="blockchain !== 'NEO'"
       ng-class="{'no-active': !(tokenInfoForm.$valid && contractNameForm.$valid && tokenOwnerForm.$valid && storageForm.$valid && saleTokensParamsForm.$valid && minMaxInvestmentsForm.$valid && timeBonusForm.$valid)}"
       name="amountBonusForm">
     <div ng-controller="crowdSaleAmountBonusesController"
@@ -123,10 +120,35 @@
 </form>
 
 <form class="shadow-block"
-      ng-class="{'no-active': !(tokenInfoForm.$valid && contractNameForm.$valid && tokenOwnerForm.$valid && saleTokensParamsForm.$valid && ((storageForm.$valid && minMaxInvestmentsForm.$valid && timeBonusForm.$valid && amountBonusForm.$valid) || (blockchain === 'NEO')))}"
+      ng-class="{'no-active': !(tokenInfoForm.$valid && contractNameForm.$valid && tokenOwnerForm.$valid && saleTokensParamsForm.$valid && ((storageForm.$valid && minMaxInvestmentsForm.$valid && timeBonusForm.$valid && amountBonusForm.$valid)))}"
       name="distributionForm">
     <div ng-controller="crowdSaleHoldersController"
          ng-include="getTemplate('pages/createcontract/crowdSale/holders')"></div>
+</form>
+
+<form class="shadow-block" name="feedbackForm"
+      ng-show="network === 26483"
+      ng-class="{'no-active': !(tokenInfoForm.$valid && contractNameForm.$valid && tokenOwnerForm.$valid  && saleTokensParamsForm.$valid && distributionForm.$valid && storageForm.$valid && minMaxInvestmentsForm.$valid && timeBonusForm.$valid && amountBonusForm.$valid)}">
+    <div class="shadow-block__content">
+        <div class="grid-row">
+            <div class="grid-cell grid-cell-3-5 grid-cell-ps-4-5 grid-cell-vs-1">
+                <div class="form-control">
+                    <label for="feedback-email" class="form-control-label"
+                           translate="FEEDBACK_EMAIL"></label>
+                    <input id="feedback-email" type="email"
+                           placeholder="mail@mail.com"
+                           ng-model="feedback_email"
+                           ng-required="network === 26483"
+                           class="form-control-input"/>
+                </div>
+            </div>
+            <div class="grid-cell grid-cell-2-5 form-control-description grid-cell-ps-4-5 grid-cell-vs-1">
+                <div class="form-control-label hide-ps">&nbsp;</div>
+                <span class="form-control-description__text"
+                      translate="FEEDBACK_EMAIL_DESCRIPTION"></span>
+            </div>
+        </div>
+    </div>
 </form>
 
 <br/><br/><br/>
@@ -135,7 +157,7 @@
     <div class="grid-cell grid-cell-vs-1-2">
         <button class="uppercase btn btn-submit mobile-width-100"
                 type="button"
-                ng-disabled="!(tokenInfoForm.$valid && contractNameForm.$valid && tokenOwnerForm.$valid  && saleTokensParamsForm.$valid && distributionForm.$valid && ((storageForm.$valid && minMaxInvestmentsForm.$valid && timeBonusForm.$valid && amountBonusForm.$valid) || (blockchain === 'NEO')))"
+                ng-disabled="!(tokenInfoForm.$valid && contractNameForm.$valid && tokenOwnerForm.$valid  && saleTokensParamsForm.$valid && distributionForm.$valid && feedbackForm.$valid && ((storageForm.$valid && minMaxInvestmentsForm.$valid && timeBonusForm.$valid && amountBonusForm.$valid)))"
                 ng-click="createContract()">
             <span class="lds-ellipsis" ng-if="contractInProgress">
                 <span class="lds-ellipsis-container">

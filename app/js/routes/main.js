@@ -7,25 +7,7 @@ module.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
     $stateProvider.state('main', {
         abstract: true,
         templateUrl: '/templates/common/main.html',
-        controller: function($rootScope, $scope, ENV_VARS) {
-
-            if (ENV_VARS.mode === 'tron') {
-                return;
-            }
-
-            var startSantaPromo = moment.utc([2018, 11, 26, 0, 0, 1]);
-            var finishSantaPromo = moment.utc([2019, 0, 15, 23, 59, 59]);
-            var nowDateTime = $rootScope.getNowDateTime(true);
-
-            if ((nowDateTime >= startSantaPromo) && (nowDateTime < finishSantaPromo)) {
-                $scope.santaPromo = 'SANTA';
-                $rootScope.globalError = {
-                    type: 'success',
-                    text: 'Enter SANTA promo code and get 50% off before the 15th of January',
-                    promo: true
-                };
-            }
-        },
+        controller: function() {},
         resolve: {
             currentUser: function($rootScope) {
                 return $rootScope.currentUserDefer.promise;
@@ -43,7 +25,7 @@ module.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                 return $rootScope.currentUserDefer.promise;
             }
         },
-        controller: function(currentUser, $state, authService, $stateParams, $location, $window) {
+        controller: function(currentUser, $state, authService, $stateParams, $location) {
             if (currentUser) {
                 if (!$stateParams.go) {
                     currentUser.data.contracts ? $state.go('main.contracts.list') : $state.go('main.createcontract.types');
@@ -65,7 +47,7 @@ module.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
         template: '',
         controller: function(authService) {
             authService.logout().then(function() {
-                window.location.href = '/auth/';
+                window.location.href = '/create';
             });
         }
     }).state('first_entry', {
@@ -90,17 +72,10 @@ module.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
 
     }).state('main.base', {
         url: '/',
-        controller: function(currentUser, $state, $rootScope) {
+        controller: function(currentUser, $state) {
             currentUser.data.contracts ? $state.go('main.contracts.list') : $state.go('main.createcontract.types');
         },
         title: 'start'
-    }).state('main.funny', {
-        url: '/😉',
-        title: '😉',
-        controller: function($rootScope, $state) {
-            $rootScope.funny = true;
-            $state.go('main.base');
-        }
     }).state('main.profile', {
         url: '/profile',
         controller: 'profileController',
@@ -108,71 +83,11 @@ module.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
         title: 'Profile',
         resolve: {
         }
-    }).state('main.settings', {
-        url: '/settings',
-        controller: 'settingsController',
-        templateUrl: templatesPath + 'settings.html',
-        title: 'Settings',
-        resolve: {
-        }
-    }).state('main.messages', {
-        url: '/messages',
-        controller: 'messagesController',
-        templateUrl: templatesPath + 'messages.html',
-        resolve: {
-        }
-    }).state('eoslynx', {
-        url: '/eoslynx',
-        controller: function($cookies, $rootScope, $state) {
-            $cookies.put('eoslynx', 1);
-            $rootScope.eoslynx = true;
-            $state.go('main.base');
-        }
-    }).state('main.extdevs', {
-        url: '/ext-devs',
-        controller: 'extDevsController',
-        templateUrl: templatesPath + 'ext-devs.html'
-    }).state('main.api', {
-        url: '/mywish-api',
-        controller: 'apiDevsController',
-        templateUrl: templatesPath + 'api-devs.html'
-    }).state('main.contacts', {
-        url: '/contacts',
-        controller: 'contactsController',
-        templateUrl: templatesPath + 'contacts.html'
-    }).state('main.faq', {
-        url: '/faq',
-        controller: 'faqController',
-        templateUrl: templatesPath + 'faq.html',
-        resolve: {
-        }
     }).state('main.buytokens', {
         url: '/buy',
-        controllerProvider: function(ENV_VARS) {
-            switch (ENV_VARS.mode) {
-                case 'eos':
-                    return 'eosBuytokensController';
-                case 'tron':
-                    return 'tronBuytokensController';
-                default:
-                    return 'buytokensController';
-            }
-        },
-        templateProvider: function ($templateCache, ENV_VARS) {
-            var buyTokensTpl;
-            switch (ENV_VARS.mode) {
-                case 'eos':
-                    buyTokensTpl = 'eos-buytokens';
-                    break;
-                case 'tron':
-                    buyTokensTpl = 'tron-buytokens';
-                    break;
-                default:
-                    buyTokensTpl = 'buytokens';
-                    break;
-            }
-
-            return $templateCache.get(templatesPath + buyTokensTpl + '.html');
+        controller: 'buytokensController',
+        templateProvider: function ($templateCache) {
+            return $templateCache.get(templatesPath + 'buytokens.html');
         },
         data: {
             notAccess: 'is_ghost'
@@ -185,25 +100,8 @@ module.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                 var defer = $q.defer();
                 var loadedCurrencies = {};
                 var loadedCurrenciesCount = 0;
-                var currencies;
-                var currentCurrency;
-
-
-                switch (ENV_VARS.mode) {
-                    case 'eos':
-                        currencies = ['EOS', 'ETH', 'BTC'];
-                        currentCurrency = 'EOSISH';
-                        break;
-                    case 'tron':
-                        currencies = ['TRX', 'ETH', 'BTC'];
-                        currentCurrency = 'TRONISH';
-                        break;
-                    default:
-                        currencies = ['ETH','BTC','BNB', 'TRX', 'EOS', 'TRONISH', 'EOSISH', 'USDT', 'SWAP'];
-                        currentCurrency = 'WISH';
-                        break;
-                }
-
+                var currencies = ['DUCX','USDC'];
+                var currentCurrency = 'USDC';
 
                 var getRate = function(currency) {
                     contractService.getCurrencyRate({fsym: currency, tsyms: currentCurrency}).then(function(result) {
@@ -240,11 +138,17 @@ module.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
         controller: 'contractsController',
         templateUrl: templatesPath + 'contracts.html',
         resolve: {
-            contractsList: function(contractService, $rootScope, currentUser, ENV_VARS) {
-                return !$rootScope.currentUser.is_ghost ? contractService.getContractsList({
-                    eos: ENV_VARS.mode === 'eos' ? 1 : undefined,
-                    limit: 8
-                }) : [];
+            contractsList: function(contractService, $rootScope, currentUser) {
+                return new Promise(function(resolve, reject) {
+                    contractService.getContractsList({
+                        limit: 8
+                    }).then(function(result) {
+                        resolve(result);
+                    }, function() {
+                        resolve(false);
+                    });
+                });
+
             }
         }
     }).state('main.contracts.preview', {
@@ -272,70 +176,10 @@ module.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
         data: {
             top: 'main.contracts.list'
         }
-    }).state('main.contracts.preview.public', {
-        controllerProvider: function(openedContract, CONTRACT_TYPES_NAMES_CONSTANTS) {
-            var contractTpl = CONTRACT_TYPES_NAMES_CONSTANTS[openedContract.data.contract_type];
-            return contractTpl + 'PreviewController';
-        },
-        templateProvider: function ($templateCache, openedContract, CONTRACT_TYPES_NAMES_CONSTANTS) {
-            var contractTpl = CONTRACT_TYPES_NAMES_CONSTANTS[openedContract.data.contract_type];
-            return $templateCache.get(templatesPath + 'contracts/preview/' + contractTpl + '.html');
-        },
-        url: '/contracts/public/:key',
-        resolve: {
-            openedContract: function(contractService, $stateParams) {
-                if (!$stateParams.key) return false;
-                return contractService.getContractForLink($stateParams.key);
-            }
-        },
-        data: {
-            top: 'main.contracts.list'
-        }
-    }).state('main.swapbwish', {
-        controller: 'swapBwishController',
-        url: '/wish-swap',
-        templateUrl: templatesPath + 'swap-bwish.html',
     }).state('main.createcontract', {
         abstract: true,
         templateUrl: templatesPath + 'createcontract.html',
-        controller: function($scope, $rootScope, $window, $q, authService, $stateParams, $cookies) {
-
-            var iniPromoCode = function() {
-                var cookiePromo;
-
-                switch ($stateParams.ext) {
-                    case 'meetone':
-                        cookiePromo = APP_CONSTANTS.PROMO_CODES.MEETONE;
-                        break;
-                    case 'eospark':
-                        cookiePromo = APP_CONSTANTS.PROMO_CODES.EOSPARK;
-                        break;
-                    case 'lynx':
-                        cookiePromo = APP_CONSTANTS.PROMO_CODES.LYNX;
-                        $cookies.put('eoslynx', 1);
-                        $rootScope.eoslynx = true;
-                        break;
-                    default:
-                        break;
-                }
-
-
-
-                if (cookiePromo && ($rootScope.mode === 'eos')) {
-                    $rootScope.globalError = {
-                        type: 'success',
-                        text: 'Enjoy 15% off your order at checkout with code ' + cookiePromo + ' applied.',
-                        promo: true
-                    };
-                } else if (!$scope.santaPromo && $rootScope.globalError && $rootScope.globalError.promo) {
-                    $rootScope.globalError = undefined;
-                }
-
-                $cookies.put('partnerpromo', cookiePromo);
-            };
-
-            iniPromoCode();
-
+        controller: function($scope, $rootScope, $window, $q) {
             $scope.checkUserIsGhost = function() {
                 if ($rootScope.currentUser.is_ghost) {
 
@@ -381,50 +225,29 @@ module.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                 return contractService.getAllCosts();
             }
         },
-        controller: function($scope, allCosts, CONTRACT_TYPES_FOR_CREATE, ENV_VARS,
-                             $stateParams, $location, $cookies, APP_CONSTANTS, $rootScope) {
+        controller: function($scope, allCosts, $stateParams, CONTRACT_TYPES_FOR_CREATE) {
 
             $scope.blockChainNetwork = {};
-            var iniListParams = function() {
-                switch (ENV_VARS.mode) {
-                    case 'eos':
-                        $scope.blockChainNetwork.type =
-                            CONTRACT_TYPES_FOR_CREATE[$stateParams.blockchain] ?
-                                $stateParams.blockchain : 'EOS';
-                        break;
-                    case 'tron':
-                        $scope.blockChainNetwork.type =
-                            CONTRACT_TYPES_FOR_CREATE[$stateParams.blockchain] ?
-                                $stateParams.blockchain : 'TRON';
-                        break;
-                    default:
-                        $scope.blockChainNetwork.type =
-                            CONTRACT_TYPES_FOR_CREATE[$stateParams.blockchain] ?
-                                $stateParams.blockchain : 'ETH';
-                        break;
-                }
-                $scope.blockChainNetwork.isTest = !!$stateParams.isTestNet;
-            };
-
+            $scope.blockChainNetwork.isTest = !!$stateParams.isTestNet;
+            //
             for (var key in allCosts.data) {
                 allCosts.data[key] = {
-                    WISH: new BigNumber(allCosts.data[key]['WISH']+'').round(3).toString(10),
-                    USDT: new BigNumber(allCosts.data[key]['USDT']+'').round(3).toString(10)
+                    DUCX: new BigNumber(allCosts.data[key]['DUCX']+'').round(3).toString(10),
+                    USDC: new BigNumber(allCosts.data[key]['USDC']+'').round(3).toString(10)
                 };
             }
             $scope.allCosts = allCosts.data;
+
             $scope.contractsTypes = CONTRACT_TYPES_FOR_CREATE;
-            iniListParams();
 
             $scope.redirectTo = function(link, e) {
                 e.preventDefault();
                 e.stopPropagation();
                 location.href = link;
             };
-
             $scope.$on('$locationChangeSuccess', function(event, oldLocation, newLocation) {
-                if (oldLocation == newLocation) return;
-                iniListParams();
+                if (oldLocation === newLocation) return;
+                $scope.blockChainNetwork.isTest = !!$stateParams.isTestNet;
             });
         },
         reloadOnSearch: false,
@@ -435,7 +258,6 @@ module.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
         onEnter: function($stateParams, $state) {
             if (!$stateParams.network) {
                 $state.go('main.createcontract.types');
-                return;
             }
         },
         controllerProvider: function($stateParams) {
@@ -445,26 +267,9 @@ module.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             return $templateCache.get(templatesPath + 'createcontract/' + $stateParams.selectedType + '.html');
         },
         resolve: {
-            currencyRate: function(contractService, $stateParams) {
-                var curencyValue;
-                switch($stateParams.network) {
-                    case 5:
-                    case '5':
-                    case 6:
-                    case '6':
-                        curencyValue = 'NEO';
-                        break;
-                    case 10:
-                    case '10':
-                    case 11:
-                    case '11':
-                        curencyValue = 'EOS';
-                        break;
-                    default:
-                        curencyValue = 'ETH';
-                        break;
-                }
-                if (($stateParams.network == 14) || ($stateParams.network == 15)) return;
+            currencyRate: function(contractService) {
+                var curencyValue = 'DUC';
+                // return 0;
                 return contractService.getCurrencyRate({fsym: curencyValue, tsyms: 'USD'});
             },
             openedContract: function() {
@@ -472,7 +277,7 @@ module.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
             },
             tokensList: function($stateParams, contractService) {
                 if ($stateParams.selectedType === 'crowdSale') {
-                    return contractService.getTokenContracts($stateParams.network || 1);
+                    return contractService.getTokenContracts($stateParams.network || 18);
                 }
                 return undefined;
             }
@@ -481,7 +286,7 @@ module.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
     }).state('main.createcontract.edit', {
         url: '/contracts/edit/:id',
         controllerProvider: function(openedContract, CONTRACT_TYPES_NAMES_CONSTANTS) {
-            openedContract.data.contract_details.eth_contract = undefined;
+            openedContract.data.contract_details.duc_contract = undefined;
             var contractType = CONTRACT_TYPES_NAMES_CONSTANTS[openedContract.data.contract_type];
             return contractType + 'CreateController';
         },
@@ -494,25 +299,9 @@ module.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
                 if (!$stateParams.id) return false;
                 return contractService.getContract($stateParams.id);
             },
-            currencyRate: function(contractService, openedContract, CONTRACT_TYPES_NAMES_CONSTANTS) {
-                var curencyValue;
-                switch(openedContract.data.network) {
-                    case 5:
-                    case '5':
-                    case 6:
-                    case '6':
-                        curencyValue = 'NEO';
-                        break;
-                    case 10:
-                    case '10':
-                    case 11:
-                    case '11':
-                        curencyValue = 'EOS';
-                        break;
-                    default:
-                        curencyValue = 'ETH';
-                        break;
-                }
+            currencyRate: function(contractService) {
+                var curencyValue = 'DUC';
+                // return 0;
                 return contractService.getCurrencyRate({fsym: curencyValue, tsyms: 'USD'});
             },
             tokensList: function($stateParams, contractService, CONTRACT_TYPES_NAMES_CONSTANTS, openedContract) {
@@ -525,7 +314,6 @@ module.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
         onEnter: function(openedContract, CONTRACT_STATUSES_CONSTANTS, $state) {
             if (CONTRACT_STATUSES_CONSTANTS[openedContract.data.state]['value'] > 1) {
                 $state.go('main.contracts.preview.byId', {id: openedContract.data.id});
-                return;
             }
         },
         data: {

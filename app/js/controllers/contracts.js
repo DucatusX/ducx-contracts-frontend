@@ -41,6 +41,14 @@ angular.module('app').controller('contractsController', function(CONTRACT_STATUS
         });
     };
 
+    $scope.unConfirmContract = function(contract) {
+        $scope.$parent.unConfirmContract(contract, function() {
+            $scope.contractsList = $scope.contractsList.filter(function(contractItem) {
+                return contract !== contractItem;
+            });
+        });
+    };
+
     var contractsUpdateProgress = false;
     var getContracts = function() {
         if (contractsUpdateProgress) return;
@@ -48,21 +56,21 @@ angular.module('app').controller('contractsController', function(CONTRACT_STATUS
         contractsUpdateProgress = true;
         contractService.getContractsList({
             limit: 8,
-            offset: $scope.contractsList.length,
-            eos: ENV_VARS.mode === 'eos' ? 1 : undefined
+            offset: $scope.contractsList.length
         }).then(function(response) {
             contractsData = response.data;
             $scope.contractsList = $scope.contractsList.concat(response.data.results);
             contractsUpdateProgress = false;
         });
     };
+
     $scope.contractsListParams = {
         updater: getContracts,
         offset: 100
     };
 
 }).controller('baseContractsController', function($scope, $state, $timeout, contractService, $cookies,
-                                                  web3Service, WebSocketService, EOSService, CONTRACT_TYPES_FOR_CREATE,
+                                                  web3Service, WebSocketService, CONTRACT_TYPES_FOR_CREATE,
                                                   $rootScope, $interval, CONTRACT_STATUSES_CONSTANTS) {
 
     $scope.contractTypesIcons = {};
@@ -92,6 +100,20 @@ angular.module('app').controller('contractsController', function(CONTRACT_STATUS
     };
 
 
+    /* (Click) Deleting contract */
+    $scope.unConfirmContract = function(contract, callback) {
+        if (deletingProgress) return;
+        deletingProgress = true;
+        contractService.unConfirmContract(contract.id).then(function() {
+            deletingProgress = false;
+            callback ? callback() : $state.go('main.contracts.list');
+        }, function() {
+            deletingProgress = false;
+            callback ? callback() : false;
+        });
+    };
+
+
     var setContractStatValues = function(contract) {
         contract.stateValue = $scope.statuses[contract.state]['value'];
         contract.stateTitle = $scope.statuses[contract.state]['title'];
@@ -110,310 +132,36 @@ angular.module('app').controller('contractsController', function(CONTRACT_STATUS
         });
     };
 
-    var iniEOSContract = function(contract, fullScan) {
-        switch (contract.contract_type) {
-            case 12:
-                var buttons = contract.contract_details.buttons = {};
-                var nowDateTime = $rootScope.getNowDateTime(true).format('X') * 1;
-
-                var noStarted = nowDateTime < contract.contract_details.start_date;
-                if (noStarted) return;
-
-                if ((contract.stateValue === 4) || (contract.stateValue === 11)) {
-                    var softCap = contract.contract_details.soft_cap * 1;
-                    var hardCap = contract.contract_details.hard_cap * 1;
-
-                    if (!fullScan) return;
-
-                    EOSService.getTableRows(
-                        contract.contract_details.crowdsale_address,
-                        'state',
-                        contract.contract_details.crowdsale_address,
-                        contract.network
-                    ).then(function(result) {
-
-                        contract.contract_details.raised_amount =
-                            result.rows[0].total_tokens / contract.contract_details.rate / Math.pow(10, contract.contract_details.decimals);
-
-                        if (contract.stateValue !== 4) return;
-
-                        if ((nowDateTime > result.rows[0].finish) || (hardCap <= result.rows[0].total_tokens)) {
-                            contractService.checkStatus(contract.id).then(function(response) {
-
-                                var oldState = contract.state;
-                                angular.merge(contract, response.data);
-
-                                contract.contract_details.stop_date = result.rows[0].finish;
-                                contract.contract_details.start_date = result.rows[0].start;
-
-                                if (oldState !== contract.state) {
-                                    $scope.iniContract(contract, false, true);
-                                } else {
-                                    if (nowDateTime > contract.contract_details.stop_date) {
-                                        if (softCap <= result.rows[0].total_tokens) {
-                                            buttons.finalize = true;
-                                        }
-                                    } else if (hardCap <= result.rows[0].total_tokens) {
-                                        buttons.finalize = true;
-                                    }
-                                }
-                            });
-                        }
-                        if (result.rows[0].total_eoses && (softCap <= result.rows[0].total_tokens) && contract.contract_details.protected_mode) {
-                            buttons.withdraw = true;
-                        }
-                    });
-                }
-                break;
-            case 13:
-                if (contract.contract_details.processing_count) {
-                    contract.state = 'SENDING_TOKENS';
-                }
-                break;
-        }
-    };
-
-    var iniNeoContract = function(contract, fullScan) {};
-
-    var iniRSKContract = function(contract, fullScan) {};
-
-    var iniETHContract = function(contract, fullScan) {
+    var iniDUCContract = function(contract) {
         $scope.isAuthor = contract.user === $rootScope.currentUser.id;
-
         switch (contract.contract_type) {
-            case 11:
-                switch (contract.state) {
-                    case 'CREATED':
-                        contract.state = 'DRAFT';
-                        break;
-                    case 'WAITING_FOR_DEPLOYMENT':
-                        contract.state = 'CREATING';
-                        break;
-                }
-                break;
-            case 8:
-                if (contract.contract_details.processing_count) {
-                    contract.state = 'SENDING_TOKENS';
-                }
-                break;
-            case 9:
-                if (($rootScope.getNowDateTime(true).format('X') * 1 > contract.contract_details.stop_date) && (contract.stateValue === 4)) {
-                    contract.state = 'CANCELLED';
-                }
-                break;
-            case 5:
-                contract.isAuthioToken = (contract.state === 'ACTIVE') || (contract.state === 'DONE');
-                contract.withAuthioForm = contract.isAuthioToken && !contract.contract_details.authio;
-                if (contract.withAuthioForm) {
-                    contractService.getAuthioCost().then(function(response) {
-                        contract.authioPrices = {
-                            WISH: new BigNumber(response.data.WISH).div(Math.pow(10, 18)).round(2).toString(10),
-                            ETH: new BigNumber(response.data.ETH).div(Math.pow(10, 18)).round(2).toString(10),
-                            BTC: new BigNumber(response.data.BTC).div(Math.pow(10, 18)).round(2).toString(10),
-                            USDT: new BigNumber(response.data.USDT).div(Math.pow(10, 18)).round(2).toString(10),
-                        };
-                    });
-                }
-                break;
-            case 0:
-            case 1:
-            case 2:
             case 4:
-                if (contract.contract_details.eth_contract) {
-                    contract.currency = ((contract.network == 1) || (contract.network == 2)) ? 'ETH' :
-                        ((contract.network == 3) || (contract.network == 4)) ? 'SBTC' : 'Unknown';
+                if (contract.contract_details.duc_contract) {
+                    contract.currency = 'USDC';
                     $scope.networkName = contract.currency;
-                    if (contract.contract_details.eth_contract.address) {
+                    if (contract.contract_details.duc_contract.address) {
                         web3Service.setProviderByNumber(contract.network);
-                        web3Service.getBalance(contract.contract_details.eth_contract.address).then(function(result) {
+                        web3Service.getBalance(contract.contract_details.duc_contract.address).then(function(result) {
                             contract.balance = Web3.utils.fromWei(result, 'ether');
                         });
                     }
                 }
             break;
-            case 19:
-                contract.maxTokensLimit = 400;
-                if (contract.state === 'ACTIVE') {
-                    web3Service.setProviderByNumber(contract.network);
-                    var lostKeyContract = web3Service.createContractFromAbi(
-                        contract.contract_details.eth_contract.address,
-                        contract.contract_details.eth_contract.abi
-                    );
-                    lostKeyContract.methods.getTokenAddresses().call().then(function(result) {
-                        contract.contract_details.confirmed_addresses = result;
-                    }).finally(function() {
-                        $scope.$apply();
-                    });
-                }
-                break;
-        }
-
-        if (!contract.contract_details.eth_contract) return;
-
-        if (contract.contract_type === 8) {
-            contract.balance = undefined;
-        }
-
-
-        var buttons = contract.contract_details.buttons = {};
-
-        switch (contract.contract_type) {
-            case 9:
-                var nowDateTime = $rootScope.getNowDateTime(true).format('X') * 1;
-
-                contract.contract_details.raised_amount = contract.contract_details.balance || '0';
-                var balance = new BigNumber(contract.contract_details.raised_amount);
-                if ((contract.stateValue === 6) &&  (balance > 0)) {
-                    buttons.investment_refund = true;
-                }
-                if (contract.contract_details.last_balance * 1) {
-                    contract.contract_details.raised_percent = balance.minus(contract.contract_details.last_balance).div(contract.contract_details.last_balance) * 100;
-                } else if (balance > 0) {
-                    contract.contract_details.raised_percent = 100;
-                } else {
-                    contract.contract_details.raised_percent = undefined;
-                }
-                if (contract.contract_details.token_address && (($state.current.name === 'main.contracts.preview.byId')||(contract.stateValue === 11))) {
-                    var infoData = (($state.current.name === 'main.contracts.preview.byId') || ($state.current.name === 'main.contracts.preview.public')) ? ['decimals', 'symbol'] : [];
-                    if ((contract.stateValue === 11) || (contract.stateValue === 6)) {
-                        infoData.push('balanceOf');
-                    }
-                    web3Service.setProviderByNumber(contract.network);
-                    web3Service.getTokenInfo(
-                        contract.network,
-                        contract.contract_details.token_address,
-                        contract.contract_details.eth_contract.address,
-                        infoData
-                    ).then(function(result) {
-                        contract.tokenInfo = result;
-                        if (result.balance * 1) {
-                            contract.balance = result.balance;
-                        }
-                    });
-                }
-
-                switch (contract.stateValue) {
-                    case 4:
-                        buttons.investment_pool_deposit = (nowDateTime < contract.contract_details.stop_date) && (nowDateTime > contract.contract_details.start_date);
-
-                        var softCapCompleted = balance.minus(contract.contract_details.soft_cap) >= 0;
-                        var hardCapCompleted = balance.minus(contract.contract_details.hard_cap) >= 0;
-
-                        var isSoftCapSendFunds = softCapCompleted && contract.contract_details.send_tokens_soft_cap;
-                        var isHardCapSendFunds = hardCapCompleted && contract.contract_details.send_tokens_hard_cap;
-
-
-                        buttons.send_funds = contract.contract_details.token_address && contract.contract_details.investment_address &&
-                            (nowDateTime > contract.contract_details.start_date) &&
-                            (
-                                ((softCapCompleted && $scope.isAuthor) || isSoftCapSendFunds) ||
-                                ((hardCapCompleted && $scope.isAuthor) || isHardCapSendFunds)
-                            );
-
-                        buttons.send_funds_only_author = buttons.send_funds && !(isSoftCapSendFunds || isHardCapSendFunds);
-
-                        if ($scope.isAuthor) {
-                            buttons.change_date = (nowDateTime < contract.contract_details.stop_date) && contract.contract_details.allow_change_dates;
-                            buttons.whitelist = contract.contract_details.whitelist;
-                            buttons.set_token = !contract.contract_details.token_address;
-                            buttons.set_investment = !contract.contract_details.investment_address;
-                            buttons.cancel = true;
-                            buttons.settings =
-                                buttons.change_date || buttons.whitelist || buttons.set_token || buttons.set_investment;
-                        }
-                        break;
-                    case 11:
-                        web3Service.setProviderByNumber(contract.network);
-                        var iPoolContract = web3Service.createContractFromAbi(contract.contract_details.eth_contract.address, contract.contract_details.eth_contract.abi);
-
-                        var contractInvestmentsParams = ['investorsCount', 'BATCH_SIZE'];
-                        var contractInvestmentsData = {};
-                        var allMethodsCount = contractInvestmentsParams.length;
-
-                        var checkActivePage = function(callback) {
-                            var pagesLength = Math.ceil(
-                                contractInvestmentsData['investorsCount']/contractInvestmentsData['BATCH_SIZE']
-                            );
-
-                            var currentPage = 0;
-                            var getTokensOnPage = function() {
-                                web3Service.setProviderByNumber(contract.network);
-                                iPoolContract.methods['pageTokenAmount'](currentPage).call(function(error, result) {
-                                    var intResult = result * 1;
-                                    if (!intResult) {
-                                        currentPage++;
-                                        (currentPage < pagesLength) ? getTokensOnPage() : callback();
-                                    } else {
-                                        callback(currentPage)
-                                    }
-                                });
-                            };
-                            getTokensOnPage();
-                        };
-
-                        var getParamData = function(methodName) {
-                            web3Service.setProviderByNumber(contract.network);
-                            web3Service.callMethod(iPoolContract, methodName).then(function(result) {
-                                contractInvestmentsData[methodName] = result;
-                                allMethodsCount--;
-                                if (!allMethodsCount) {
-                                    checkActivePage(function(page) {
-                                        buttons.send_tokens = page;
-                                        $scope.$apply();
-                                    });
-                                }
-                            });
-                        };
-
-                        while (contractInvestmentsParams.length) {
-                            getParamData(contractInvestmentsParams.pop());
-                        }
-
-                        break;
-                }
-                break;
         }
     };
 
     $scope.iniContract = function(contract, fullScan, noWS) {
-
         contract.original_cost = contract.cost;
-
         if (!noWS) {
             iniSocketHandler(contract);
         }
-
         contract.original_cost = contract.cost;
-
         switch (contract.network) {
-            case 1:
-            case 2:
-                iniETHContract(contract, fullScan);
+            case 26483:
+            case 26482:
+                iniDUCContract(contract, fullScan);
                 setContractStatValues(contract);
                 break;
-            case 3:
-            case 4:
-                iniRSKContract(contract, fullScan);
-                setContractStatValues(contract);
-                break;
-            case 6:
-                iniNeoContract(contract, fullScan);
-                setContractStatValues(contract);
-                break;
-            case 10:
-            case 11:
-                iniEOSContract(contract, fullScan);
-                setContractStatValues(contract);
-                if ($cookies.get('partnerpromo') && ($state.current.name === "main.contracts.preview.byId") && (contract.stateValue === 1)) {
-                    contract.promo = $cookies.get('partnerpromo');
-                    $scope.getDiscount(contract, true);
-                }
-                break;
-            case 14:
-            case 15:
-                // iniEOSContract(contract, fullScan);
-                contract.cost.TRONISH = contract.cost.TRONISH || contract.cost.TRX;
-                setContractStatValues(contract);
         }
     };
 
@@ -437,25 +185,10 @@ angular.module('app').controller('contractsController', function(CONTRACT_STATUS
         });
     };
 
-    var contractsTypesForLayer = {
-        0: 'will',
-        1: 'lost_key',
-        2: 'deferred',
-        4: 'crowdsale',
-        5: 'token',
-        6: 'neo_token',
-        7: 'neo_crowdsale',
-        8: 'airdrop',
-        9: 'invest',
-        10: 'eos_token',
-        11: 'eos_wallet',
-        12: 'eos_crowdsale',
-        13: 'eos_airdrop',
-        14: 'eos_i_token',
-        15: 'tron_token',
-        16: 'game_assets',
-        17: 'tron_airdrop'
-    };
+    // var contractsTypesForLayer = {
+    //     4: 'crowdsale',
+    //     5: 'token'
+    // };
 
     var launchContract = function(contract) {
         if (contract.launchProgress) return;
@@ -463,17 +196,13 @@ angular.module('app').controller('contractsController', function(CONTRACT_STATUS
 
         $rootScope.closeCommonPopup();
 
-        contractService.deployContract(contract.id, contract.promo, ($rootScope.sitemode === 'eos') ? true : undefined).then(function() {
+        contractService.deployContract(contract.id, contract.promo).then(function() {
             contract.launchProgress = false;
-
-            // add event to GTM
-            var testNetwork = [2, 4, 6, 11, 15].indexOf(contract.network) > -1;
-            var contractType = contractsTypesForLayer[contract.contract_type] || 'unknown';
-
-            if (window['dataLayer']) {
-                window['dataLayer'].push({'event': contractType + '_contract_launch_success' + (testNetwork ? '_test' : '')});
-            }
-
+            // var testNetwork = [2].indexOf(contract.network) > -1;
+            // var contractType = contractsTypesForLayer[contract.contract_type] || 'unknown';
+            // if (window['dataLayer']) {
+            //     window['dataLayer'].push({'event': contractType + '_contract_launch_success' + (testNetwork ? '_test' : '')});
+            // }
             if ($state.current.name === 'main.contracts.list') {
                 $scope.refreshContract(contract);
             } else {
@@ -523,13 +252,21 @@ angular.module('app').controller('contractsController', function(CONTRACT_STATUS
             };
             return;
         }
+
+
         var openConditionsPopUp = function() {
             $rootScope.commonOpenedPopupParams = {
                 contract: contract,
                 class: 'conditions',
                 newPopupContent: true,
                 actions: {
-                    showPriceLaunchContract: showPriceLaunchContract
+                    showPriceLaunchContract: function(contract) {
+                        if ($rootScope.currentUser.is_ducx_admin) {
+                            launchContract(contract);
+                        } else {
+                            showPriceLaunchContract(contract);
+                        }
+                    }
                 }
             };
             $rootScope.commonOpenedPopup = 'disclaimers/conditions';
@@ -545,39 +282,15 @@ angular.module('app').controller('contractsController', function(CONTRACT_STATUS
 
     var showPriceLaunchContract = function(contract) {
 
-        if ((contract.cost.WISH == 0) && (contract.cost.EOSISH == 0) && (contract.cost.TRX == 0)) {
+        if (contract.cost.USDC == 0) {
             launchContract(contract);
             return;
         }
 
-        var contractConfirmTpl;
-        switch (contract.contract_type) {
-            case 11:
-                contractConfirmTpl = 'confirmations/account-confirm-pay';
-                break;
-            default:
-                contractConfirmTpl = 'confirmations/contract-confirm-pay';
-                break;
+        var price = new BigNumber(contract.cost.USDC).div(Math.pow(10, 6));
+        var currency = 'USDC';
 
-        }
-
-        var price, currency;
-
-        switch ($rootScope.sitemode) {
-            case 'eos':
-                price = new BigNumber(contract.cost.EOSISH).div(10000).round(2);
-                currency = 'EOSISH';
-                break;
-            case 'tron':
-                price = new BigNumber(contract.cost.TRONISH).div(1000000).round(2);
-                currency = 'TRONISH';
-                break;
-            default:
-                price = new BigNumber(Web3.utils.fromWei(contract.cost.WISH, 'ether')).round(2);
-                currency = 'WISH';
-        }
-
-        $rootScope.commonOpenedPopup = contractConfirmTpl;
+        $rootScope.commonOpenedPopup = 'confirmations/contract-confirm-pay';
 
         $rootScope.commonOpenedPopupParams = {
             newPopupContent: true,
@@ -601,21 +314,10 @@ angular.module('app').controller('contractsController', function(CONTRACT_STATUS
             promo: contract.promo
         }).then(function(response) {
             contract.cost = response.data.discount_price;
-            contract.cost.TRONISH = contract.cost.TRONISH || contract.cost.TRX;
-            var price, currency;
-            switch ($rootScope.sitemode) {
-                case 'eos':
-                    price = new BigNumber(contract.cost.EOSISH).div(10000).round(2);
-                    currency = 'EOSISH';
-                    break;
-                case 'tron':
-                    price = new BigNumber(contract.cost.TRONISH).div(1000000).round(2);
-                    currency = 'TRONISH';
-                    break;
-                default:
-                    price = new BigNumber(Web3.utils.fromWei(contract.cost.WISH, 'ether')).round(2);
-                    currency = 'WISH';
-            }
+
+            var price = new BigNumber(contract.cost.USDC).div(Math.pow(10, 6));
+            var currency = 'USDC';
+
             $rootScope.commonOpenedPopupParams = {
                 currency: currency,
                 price: price,
@@ -635,26 +337,4 @@ angular.module('app').controller('contractsController', function(CONTRACT_STATUS
             contract.checkPromoProgress = false;
         });
     };
-
-    $scope.neoCrowdSaleFinalize = function(contract) {
-        contractService.neoICOFilnalize(contract.id).then(function(reponse) {
-            $rootScope.commonOpenedPopup = 'alerts/neo-finalize-success';
-            $scope.refreshContract(contract);
-        }, function(reponse) {
-            switch (reponse.status) {
-                case 400:
-                    switch(reponse.data.result) {
-                        case 2:
-                        case '2':
-                            $rootScope.commonOpenedPopupParams = {
-                                contract: contract
-                            };
-                            $rootScope.commonOpenedPopup = 'alerts/neo-finalize-denied';
-                            break;
-                    }
-                    break;
-            }
-        });
-    };
-
 });

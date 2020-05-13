@@ -16,7 +16,6 @@ var gulp = require('gulp'),
     config = require('./config.js'),
     revReplace = require("gulp-rev-replace"),
     sourcemaps = require("gulp-sourcemaps"),
-    rename = require('gulp-rename'),
     template = require('gulp-template');
 
 var envify = require( 'envify/custom' );
@@ -111,7 +110,7 @@ gulp.task('app:vendors-clean', function () {
     return del([path.join(input, 'static', 'vendors', '**/*')]);
 });
 /* Vendors scripts collection */
-gulp.task('app:vendors', ['app:vendors-clean', 'app:web3', 'app:eos-lynx', 'app:polyfills'], function() {
+gulp.task('app:vendors', ['app:vendors-clean', 'app:web3', 'app:polyfills'], function() {
     var js = gulp.src(
         [
             path.join(input, 'static', 'polyfills', 'polyfills.js'),
@@ -119,7 +118,6 @@ gulp.task('app:vendors', ['app:vendors-clean', 'app:web3', 'app:eos-lynx', 'app:
             path.join(folders['npm'], 'papaparse', 'papaparse.min.js'),
             path.join(folders['npm'], 'ua-parser-js', 'dist', 'ua-parser.min.js'),
             path.join(folders['npm'], 'qrious', 'dist', 'qrious.min.js'),
-            // path.join(folders['npm'], 'eosjs', 'dist', 'index.js'),
             path.join(folders['npm'], 'angular', 'angular.min.js'),
             path.join(folders['npm'], 'angular-resource', 'angular-resource.min.js'),
             path.join(folders['npm'], 'angular-cookies', 'angular-cookies.min.js'),
@@ -169,13 +167,6 @@ gulp.task('app:ws', function() {
     return gulp.src(path.join(output, 'ws', 'socket-client.js'))
         .pipe(browserify())
         .pipe(gulp.dest(path.join(input, 'static', 'ws')));
-});
-
-
-gulp.task('app:eos-lynx', function() {
-    return gulp.src(path.join(output, 'eos-lynx.js'))
-        .pipe(browserify())
-        .pipe(gulp.dest(path.join(input, 'static', 'eos-lynx')));
 });
 
 gulp.task('app:web3', function() {
@@ -280,26 +271,11 @@ gulp.task('app:revision', function() {
     var manifestTemplates = gulp.src(path.join(input, 'static', 'tpl', 'templates.json'));
     var endBodyScripts = fs.readFileSync("app/endBody.htm", "utf8");
 
-    var bestrateScript;
-
-    switch(currentBlockChainMode) {
-        case 'eos':
-            bestrateScript = fs.readFileSync("app/bestRateWidget.htm", "utf8");
-            break;
-        case 'default':
-        case 'tron':
-            bestrateScript = fs.readFileSync("app/ethBestRateWidget.htm", "utf8");
-            break;
-        default:
-            bestrateScript = '';
-            break;
-    }
 
     return gulp.src([path.join(output, '*.html')])
         .pipe(template({
             socialScripts: fs.readFileSync("app/social.htm", "utf8"),
-            endBodyScripts: endBodyScripts,
-            bestRateWidget: bestrateScript
+            endBodyScripts: endBodyScripts
         }))
         .pipe(revReplace({manifest: manifestCSS}))
         .pipe(revReplace({manifest: manifestJS}))
@@ -309,54 +285,7 @@ gulp.task('app:revision', function() {
         .pipe(gulp.dest(input))
 });
 
-
-gulp.task('app:zh-revision', function() {
-    var manifestCSS = gulp.src(path.join(input, 'static', folders['css'], 'rev-manifest.json'));
-    var manifestJS = gulp.src(path.join(input, 'static', folders['js'], 'main.json'));
-    var manifestLoginJS = gulp.src(path.join(input, 'static', folders['js'], 'login.json'));
-    var manifestVendors = gulp.src(path.join(input, 'static', 'vendors', 'rev-manifest.json'));
-    var manifestTemplates = gulp.src(path.join(input, 'static', 'tpl', 'templates.json'));
-
-
-    var bestrateScript;
-
-    switch(currentBlockChainMode) {
-        case 'eos':
-            bestrateScript = fs.readFileSync("app/bestRateWidget.htm", "utf8");
-            break;
-        case 'default':
-            bestrateScript = fs.readFileSync("app/ethBestRateWidget.htm", "utf8");
-            break;
-        default:
-            bestrateScript = '';
-            break;
-    }
-
-    return gulp.src([path.join(output, '*.html')])
-        .pipe(template({
-            socialScripts: '',
-            endBodyScripts: '',
-            bestRateWidget: bestrateScript
-        }))
-        .pipe(revReplace({manifest: manifestCSS}))
-        .pipe(revReplace({manifest: manifestJS}))
-        .pipe(revReplace({manifest: manifestLoginJS}))
-        .pipe(revReplace({manifest: manifestVendors}))
-        .pipe(revReplace({manifest: manifestTemplates}))
-        .pipe(rename(function (path) {
-            path.basename+= '.zh';
-        }))
-        .pipe(gulp.dest(input))
-});
-
-
-
-let modes = ['eos', 'tron', 'default'];
-var currentMode = modes.filter((mode) => {
-    return argv[mode];
-})[0] || 'default';
-
-process.env.MODE = currentMode;
+process.env.MODE = 'default';
 
 gulp.task('ng-config', function() {
     if (!fs.existsSync(input)) {
@@ -377,7 +306,7 @@ gulp.task('ng-config', function() {
 
 
 gulp.task('app:rev', ['app:css', 'app:vendors', 'all:js-start', 'app:templates'], function() {
-    return gulp.start('app:revision', 'app:zh-revision');
+    return gulp.start('app:revision');
 });
 gulp.task('css:watcher', ['app:css'], function() {
     return gulp.start('app:revision');

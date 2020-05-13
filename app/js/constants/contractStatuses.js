@@ -56,6 +56,10 @@ module.constant('CONTRACT_STATUSES_CONSTANTS', {
         title: 'Under Crowdsale',
         value: 12
     },
+    'WAITING_FOR_CONFIRMATION': {
+        title: 'Waiting for confirmation',
+        value: 13
+    },
     'SENDING_TOKENS': {
         title: 'Sending',
         value: 101

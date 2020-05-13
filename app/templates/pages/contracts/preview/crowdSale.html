@@ -14,7 +14,7 @@
 
 <div ng-if="showedTab == 'code'">
     <div class="shadow-block after-tabs">
-        <div class="shadow-block__content" ng-if="(contract.network == 2) || (contract.network == 4) || (contract.network == 6)">
+        <div class="shadow-block__content" ng-if="contract.network == 2">
             <p class="normal-text">
                 <span translate="CONTRACTS.PREVIEW.FREE_VERSION_MSG"></span>
             </p>
@@ -24,12 +24,12 @@
             <p class="normal-text">
                 <span>{{'CONTRACTS.PREVIEW.TOKEN_SOURCE_CODE'|translate}}
                     <span class="as-link dotted"
-                          ng-if="(contract.network == 1) || (contract.network == 3) || (contract.network == 5)"
+                          ng-if="contract.network == 1"
                           ng-click="saveAsFile(contract.contract_details[contractTokenInfo].source_code, contract.name + '(token)')">
                         <span translate="CONTRACTS.PREVIEW.HERE"></span>
                     </span>
                     <span class="grey-text-color"
-                          ng-if="(contract.network == 2) || (contract.network == 4) || (contract.network == 6)">
+                          ng-if="contract.network == 2">
                         <span translate="CONTRACTS.PREVIEW.HERE"></span>
                     </span>
                 </span>
@@ -37,45 +37,45 @@
             <p class="normal-text">
                 <span>{{'CONTRACTS.PREVIEW.CROWDSALE_SOURCE_CODE'|translate}}
                     <span class="as-link dotted"
-                          ng-if="(contract.network == 1) || (contract.network == 3) || (contract.network == 5)"
+                          ng-if="contract.network == 1"
                           ng-click="saveAsFile(contract.contract_details[contractCrowdsaleInfo].source_code, contract.name + '(crowdsale)')">
                         <span translate="CONTRACTS.PREVIEW.HERE"></span>
                     </span>
                     <span class="grey-text-color"
-                          ng-if="(contract.network == 2) || (contract.network == 4) || (contract.network == 6)">
+                          ng-if="contract.network == 2">
                         <span translate="CONTRACTS.PREVIEW.HERE"></span>
                     </span>
                 </span>
             </p>
             <p class="normal-text">
                 <span translate="CONTRACTS.PREVIEW.LIBRARIES_AND_FILES"
-                      translate-values="{gitHubLink: contractTokenInfo === 'eth_contract_token' ? 'https://github.com/MyWishPlatform/ico-crowdsale' : 'https://github.com/MyWishPlatform/neo-ico-contracts'}"></span>
+                      translate-values="{gitHubLink: 'https://github.com/MyWishPlatform/ico-crowdsale'}"></span>
             </p>
         </div>
 
-        <div class="shadow-block__content" ng-if="blockchain === 'ETH'">
+        <!-- div class="shadow-block__content">
             <p class="normal-text" translate="CONTRACTS.PREVIEW.ETHERSCAN_VERIFY_SUPPORT_OR_FOLLOW"></p>
         </div>
-        <div class="shadow-block__content" ng-if="blockchain === 'ETH'">
+        <div class="shadow-block__content">
             <div class="grid-row">
                 <div class="grid-cell grid-cell-1-2 grid-cell-vs-1 text-center">
                     <button type="button" class="btn btn-gray with-icon initial-padding"
-                            ng-mousedown="goTo('code', 'eth_contract_crowdsale')"
-                            ng-class="{'active': selectedContract === 'eth_contract_crowdsale'}">
+                            ng-mousedown="goTo('code', 'ducx_contract_crowdsale')"
+                            ng-class="{'active': selectedContract === 'ducx_contract_crowdsale'}">
                         <span translate="CONTRACTS.FORMS.CROWD_SALE.TITLE"></span>
                     </button>
                 </div>
                 <div class="clearfix show-vs"><br/></div>
                 <div class="grid-cell grid-cell-1-2 grid-cell-vs-1 text-center">
                     <button type="button" class="btn btn-gray with-icon initial-padding"
-                            ng-mousedown="goTo('code', 'eth_contract_token')"
-                            ng-class="{'active': selectedContract === 'eth_contract_token'}">
+                            ng-mousedown="goTo('code', 'ducx_contract_token')"
+                            ng-class="{'active': selectedContract === 'ducx_contract_token'}">
                         <span translate="CONTRACTS.FORMS.TOKEN.TITLE"></span>
                     </button>
                 </div>
             </div>
         </div>
-        <div class="shadow-block__content" ng-if="selectedContract && (blockchain === 'ETH')">
+        <div class="shadow-block__content" ng-if="selectedContract">
             <ul class="new-instruction-list">
                 <li class="new-instruction-list__item">
                     <div class="new-instruction-list__item__text"
@@ -94,13 +94,13 @@
                         <div class="copy-block">
                             <button class="copy-block__button relative"
                                     clipboard supported="supported"
-                                    text="selectedContract === 'eth_contract_crowdsale' ? 'TemplateCrowdsale' : 'MainToken'"
+                                    text="selectedContract === 'ducx_contract_crowdsale' ? 'TemplateCrowdsale' : 'MainToken'"
                                     ng-class="{copied: contract.copied['contractName']}"
                                     on-copied="$root.successCodeCopy(contract, 'contractName')"
                                     on-error="failCodeCopy(err)">&nbsp;
                                 <i class="icon-content_copy"></i>
                             </button>
-                            <div class="copy-block__text">{{selectedContract === 'eth_contract_crowdsale' ? 'TemplateCrowdsale' : 'MainToken'}}</div>
+                            <div class="copy-block__text">{{selectedContract === 'ducx_contract_crowdsale' ? 'TemplateCrowdsale' : 'MainToken'}}</div>
                         </div>
                     </div>
                 </li>
@@ -136,7 +136,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="new-instruction-list__item" ng-if="(contract.network == 2) || (contract.network == 4)">
+                <li class="new-instruction-list__item" ng-if="contract.network == 2">
                     <div class="new-instruction-list__item__text">
                         {{'CONTRACTS.PREVIEW.VERIFY_INSTRUCTION.ITEM_6'|translate}}
                         <div class="copy-block">
@@ -144,7 +144,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="new-instruction-list__item" ng-if="(contract.network == 1) || (contract.network == 3)">
+                <li class="new-instruction-list__item" ng-if="contract.network == 1">
                     <div class="new-instruction-list__item__text">
                         {{'CONTRACTS.PREVIEW.VERIFY_INSTRUCTION.ITEM_6'|translate}}
                         <div class="copy-block">
@@ -161,12 +161,12 @@
                     </div>
                 </li>
 
-                <li class="new-instruction-list__item" ng-if="selectedContract === 'eth_contract_token'">
+                <li class="new-instruction-list__item" ng-if="selectedContract === 'ducx_contract_token'">
                     <div class="new-instruction-list__item__text">
                         {{'CONTRACTS.PREVIEW.VERIFY_INSTRUCTION.ITEM_7_1'|translate}}
                     </div>
                 </li>
-                <li class="new-instruction-list__item" ng-if="selectedContract === 'eth_contract_crowdsale'">
+                <li class="new-instruction-list__item" ng-if="selectedContract === 'ducx_contract_crowdsale'">
                     <div class="new-instruction-list__item__text">
                         {{'CONTRACTS.PREVIEW.VERIFY_INSTRUCTION.ITEM_7_2'|translate}}
                         <div class="copy-block">
@@ -190,7 +190,7 @@
                     </div>
                 </li>
             </ul>
-        </div>
+        </--div -->
     </div>
 </div>
 
@@ -203,23 +203,7 @@
         <!-- CrowdSale contract address -->
         <div class="shadow-block__content shadow-block__content_min-tb-padding" ng-if="details[contractCrowdsaleInfo].address">
             <div class="form-control-label"
-                 ng-if="blockchain === 'ETH'"
                  translate="CONTRACTS.PREVIEW.CROWD_SALE.CROWD_SALE_CONTRACT"></div>
-            <div class="form-control-label"
-                 ng-if="blockchain === 'NEO'">
-                <span translate="CONTRACTS.PREVIEW.CROWD_SALE.CROWD_SALE_CONTRACT_NEO"></span>
-                (
-                <span class="as-link dotted"
-                        ng-pop-up="{
-                            template: '/templates/popups/instructions/neo/neo-python-buy-tokens.html',
-                            newPopupContent: true,
-                            params: {
-                                contract: details
-                            },
-                            class: 'conditions'
-                        }"><span>{{'CONTRACTS.PREVIEW.CROWD_SALE.NEO_HOW_CONTRIBUTE'|translate}}</span></span>
-                )
-            </div>
 
             <br class="show-ls"/>
             <span class="identicon-container">
@@ -238,31 +222,16 @@
                     <i class="icon-content_copy"></i>
                 </button>
             </div>
-            <div class="clearfix" ng-if="blockchain === 'NEO'">
-                <br/>
-                <div class="form-control-label" translate="CONTRACTS.PREVIEW.CROWD_SALE.CROWDSALE_SCRIPT_HASH"></div>
-                <br class="show-ls"/>
-                <div class="contract-wallet-information-wallet">
-                    <span ng-bind="details[contractCrowdsaleInfo].script_hash"></span>
-                    <button class="instruction-for-copy-button relative"
-                            clipboard supported="supported"
-                            ng-class="{copied: contract.copied['crowdsale_hash']}"
-                            text="details[contractCrowdsaleInfo].script_hash"
-                            on-copied="$root.successCodeCopy(contract, 'crowdsale_hash')"
-                            on-error="failCodeCopy(err)">
-                        <i class="icon-content_copy"></i>
-                    </button>
-                </div>
-            </div>
 
-            <p class="normal-text" ng-if="blockchain !== 'NEO'">
-                <small>
-                    <span class="as-link dotted"
-                          ng-click="goTo('code', 'eth_contract_crowdsale');">
-                        <span translate="CONTRACTS.PREVIEW.HOW_TO_VERIFY"></span>
-                    </span>
-                </small>
-            </p>
+
+            <!--<p class="normal-text">-->
+                <!--<small>-->
+                    <!--<span class="as-link dotted"-->
+                          <!--ng-click="goTo('code', 'ducx_contract_crowdsale');">-->
+                        <!--<span translate="CONTRACTS.PREVIEW.HOW_TO_VERIFY"></span>-->
+                    <!--</span>-->
+                <!--</small>-->
+            <!--</p>-->
         </div>
 
         <!-- Token contract address -->
@@ -285,31 +254,31 @@
                     <i class="icon-content_copy"></i>
                 </button>
             </div>
-            <p class="normal-text" ng-if="blockchain !== 'NEO'">
-                <small>
-                    <span class="as-link dotted"
-                          ng-click="goTo('code', 'eth_contract_token');">
-                        <span translate="CONTRACTS.PREVIEW.HOW_TO_VERIFY"></span>
-                    </span>
-                </small>
-            </p>
+            <!--<p class="normal-text">-->
+                <!--<small>-->
+                    <!--<span class="as-link dotted"-->
+                          <!--ng-click="goTo('code', 'ducx_contract_token');">-->
+                        <!--<span translate="CONTRACTS.PREVIEW.HOW_TO_VERIFY"></span>-->
+                    <!--</span>-->
+                <!--</small>-->
+            <!--</p>-->
         </div>
 
         <!-- Vault address -->
-        <div class="shadow-block__content shadow-block__content_min-tb-padding" ng-if="details.eth_contract_crowdsale.vault">
+        <div class="shadow-block__content shadow-block__content_min-tb-padding" ng-if="details.ducx_contract_crowdsale.vault">
             <div class="form-control-label" translate="CONTRACTS.PREVIEW.CROWD_SALE.VAULT_ADDRESS"></div>
             <br class="show-ls"/>
             <span class="identicon-container">
-                <img class="identicon-image" ng-src="{{details.eth_contract_crowdsale.vault|blockies}}"/>
+                <img class="identicon-image" ng-src="{{details.ducx_contract_crowdsale.vault|blockies}}"/>
             </span>
             <div class="contract-wallet-information-wallet">
-                <a ng-attr-href="{{(contract.network|etherscanUrl:'address')}}/{{details.eth_contract_crowdsale.vault|toCheckSum}}"
+                <a ng-attr-href="{{(contract.network|etherscanUrl:'address')}}/{{details.ducx_contract_crowdsale.vault|toCheckSum}}"
                    target="_blank"
-                   ng-bind="details.eth_contract_crowdsale.vault|toCheckSum"></a>
+                   ng-bind="details.ducx_contract_crowdsale.vault|toCheckSum"></a>
                 <button class="instruction-for-copy-button relative"
                         clipboard supported="supported"
                         ng-class="{copied: contract.copied['crowdsale_vault']}"
-                        text="details.eth_contract_crowdsale.vault|toCheckSum"
+                        text="details.ducx_contract_crowdsale.vault|toCheckSum"
                         on-copied="$root.successCodeCopy(contract, 'crowdsale_vault')"
                         on-error="failCodeCopy(err)">
                     <i class="icon-content_copy"></i>
@@ -343,8 +312,8 @@
                         {{ contract.contract_details.decimals }}
                     </div>
                 </div>
-                <div class="clearfix show-ls" ng-if="blockchain === 'ETH'"><br/></div>
-                <div class="grid-cell grid-cell-1-2 grid-cell-ls-1" ng-if="blockchain === 'ETH'">
+                <div class="clearfix show-ls"><br/></div>
+                <div class="grid-cell grid-cell-1-2 grid-cell-ls-1">
                     <div class="normal-text">
                         <span class="contract-preview-grey-font-color"
                               translate="CONTRACTS.PREVIEW.TOKEN.TOKEN_TYPE"></span><br/>
@@ -355,7 +324,7 @@
         </div>
 
         <!-- Sale/PreSale info-->
-        <div class="shadow-block__content" ng-if="blockchain === 'ETH'">
+        <div class="shadow-block__content">
             <div class="form-control-label">
                 {{'CONTRACTS.PREVIEW.CROWD_SALE.CROWD_SALE_TYPE'|translate}}
                 <b ng-if="details.continue_minting" class="uppercase"
@@ -368,7 +337,7 @@
         <!-- Crowdsale(ICO) params -->
         <div class="shadow-block__content shadow-block__content_min-tb-padding grey-color">
             <div class="grid-row">
-                <div class="grid-cell" ng-class="{'grid-cell-1': blockchain === 'ETH', 'grid-cell-1-2': blockchain === 'NEO'}">
+                <div class="grid-cell grid-cell-1">
                     <div class="form-control-label">
                         <i class="icon-bitcoin-exchange-rate-symbol form-control-label-icon"></i>
                         {{'CONTRACTS.FORMS.CROWD_SALE.FIELDS.TOKEN_RATE.LABEL'|translate}}
@@ -378,7 +347,6 @@
                         {{details.token_short_name}} = 1{{blockchain}}
                     </div>
                 </div>
-                <div class="clearfix" ng-class="{'show-ls': blockchain === 'NEO'}"><br/></div>
 
                 <div class="grid-cell grid-cell-1-2 grid-cell-ls-1">
                     <div class="form-control-label">
@@ -395,8 +363,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="clearfix show-ls" ng-if="blockchain === 'ETH'"><br/></div>
-                <div class="grid-cell grid-cell-1-2 grid-cell-ls-1" ng-if="blockchain === 'ETH'">
+                <div class="clearfix show-ls"><br/></div>
+                <div class="grid-cell grid-cell-1-2 grid-cell-ls-1">
                     <div class="form-control-label">
                         <i class="icon-soft-cap form-control-label-icon"></i>
                         {{'CONTRACTS.FORMS.CROWD_SALE.FIELDS.SOFT_CAP.LABEL'|translate}}
@@ -407,7 +375,7 @@
                             {{details.token_short_name}}
                         </div>
                         <div class="contract-preview-grey-font-color contract-preview-base-value-string">
-                            {{details.soft_cap_eth|separateNumber}} ETH
+                            {{details.soft_cap_eth|separateNumber}} DUC
                         </div>
                     </div>
                 </div>
@@ -437,9 +405,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="clearfix" ng-if="blockchain === 'ETH'"><br/></div>
+                <div class="clearfix"><br/></div>
 
-                <div class="grid-cell grid-cell-1-2 grid-cell-ls-1" ng-if="blockchain === 'ETH'">
+                <div class="grid-cell grid-cell-1-2 grid-cell-ls-1">
                     <div class="form-control-label">
                         <i class="icon-padlock form-control-label-icon"></i>
                         {{'CONTRACTS.FORMS.CROWD_SALE.FIELDS.TRANSFERABLE.LABEL'|translate}}
@@ -452,23 +420,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="clearfix show-ls" ng-if="blockchain === 'ETH'"><br/></div>
-                <!--<div class="grid-cell grid-cell-1-2 grid-cell-ls-1" ng-if="blockchain === 'ETH'">-->
-                    <!--<div class="form-control-label">-->
-                        <!--<i class="icon-settings form-control-label-icon"></i>-->
-                        <!--{{'CONTRACTS.FORMS.CROWD_SALE.FIELDS.AUTO_FINALIZE.LABEL'|translate}}-->
-                    <!--</div>-->
-                    <!--<div class="normal-text contract-preview-base-value">-->
-                        <!--<div class="contract-preview-base-value-string">-->
-                            <!--<i ng-class="{'icon-check_circle': details.platform_as_admin, 'icon-cancel': !details.platform_as_admin}"></i>-->
-                            <!--<span ng-if="details.platform_as_admin" translate="YES" class="uppercase"></span>-->
-                            <!--<span ng-if="!details.platform_as_admin" translate="NO" class="uppercase"></span>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
+                <div class="clearfix show-ls"><br/></div>
 
-                <!--<div class="clearfix" ng-if="blockchain === 'ETH'"><br/></div>-->
-                <div class="grid-cell grid-cell-1-2 grid-cell-ls-1" ng-if="blockchain === 'ETH'">
+                <div class="grid-cell grid-cell-1-2 grid-cell-ls-1">
                     <div class="form-control-label">
                         <i class="icon-calendar form-control-label-icon"></i>
                         {{'CONTRACTS.FORMS.CROWD_SALE.FIELDS.CHANGING_DATES.LABEL'|translate}}
@@ -481,9 +435,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="clearfix" ng-if="blockchain === 'ETH'"><br/></div>
-                <!--<div class="clearfix show-ls" ng-if="blockchain === 'ETH'"><br/></div>-->
-                <div class="grid-cell grid-cell-1-2 grid-cell-ls-1" ng-if="blockchain === 'ETH'">
+                <div class="clearfix"><br/></div>
+
+                <div class="grid-cell grid-cell-1-2 grid-cell-ls-1">
                     <div class="form-control-label">
                         <i class="icon-note-list form-control-label-icon"></i>
                         {{'CONTRACTS.FORMS.CROWD_SALE.FIELDS.WHITELIST.LABEL'|translate}}
@@ -530,14 +484,14 @@
                 <div class="grid-cell grid-cell-1-2 grid-cell-ls-1" ng-if="details.min_wei">
                     <div class="form-control-label">
                         {{'CONTRACTS.FORMS.CROWD_SALE.FIELDS.MIN_INVESTMENTS.LABEL'|translate}}<br/>
-                        {{web3Utils.fromWei(details.min_wei, 'ether')|separateNumber}} ETH
+                        {{web3Utils.fromWei(details.min_wei, 'ether')|separateNumber}} DUCX
                     </div>
                 </div>
                 <div class="clearfix show-ls"  ng-if="details.min_wei && details.max_wei"><br/></div>
                 <div class="grid-cell grid-cell-1-2 grid-cell-ls-1" ng-if="details.max_wei">
                     <div class="form-control-label">
                         {{'CONTRACTS.FORMS.CROWD_SALE.FIELDS.MAX_INVESTMENTS.LABEL'|translate}}<br/>
-                        {{web3Utils.fromWei(details.max_wei, 'ether')|separateNumber}} ETH
+                        {{web3Utils.fromWei(details.max_wei, 'ether')|separateNumber}} DUCX
                     </div>
                 </div>
             </div>
@@ -621,11 +575,11 @@
                     <div class="form-control-label">
                         <span class="bold">
                             {{'CONTRACTS.PREVIEW.CROWD_SALE.AMOUNT_BONUSES.MIN_AMOUNT'|translate}}&nbsp;
-                        </span>{{bonus.min_amount|separateNumber}}&nbsp;ETH&nbsp;
+                        </span>{{bonus.min_amount|separateNumber}}&nbsp;DUCX&nbsp;
                         <img src="/static/images/right-arrow.svg" alt="">&nbsp;
                         <span class="bold">
                             {{'CONTRACTS.PREVIEW.CROWD_SALE.AMOUNT_BONUSES.MAX_AMOUNT'|translate}}&nbsp;
-                        </span>{{bonus.max_amount|separateNumber}}&nbsp;ETH
+                        </span>{{bonus.max_amount|separateNumber}}&nbsp;DUCX
                     </div>
                 </div>
             </div>
@@ -660,7 +614,7 @@
                     </div>
                 </div>
             </div><br/>
-            <div class="grid-row" ng-if="blockchain === 'ETH'">
+            <div class="grid-row">
                 <div class="grid-cell grid-cell-1">
                     <div class="form-control-label"
                          translate="CONTRACTS.FORMS.CROWD_SALE.FIELDS.STORAGE_ADDRESS.LABEL"></div>
@@ -766,12 +720,34 @@
                 </div>
             </div>
         </div>
+
+        <div class="shadow-block__content shadow-block__content_min-tb-padding" ng-if="contract.network == 26483">
+            <div class="grid-row">
+                <div class="grid-cell grid-cell-1">
+                    <div class="form-control-label"
+                         translate="FEEDBACK_EMAIL"></div>
+                    <br class="show-ls"/>
+
+                    <div class="contract-wallet-information-wallet">
+                        <a ng-attr-href="{{'mailto:' + contract.feedback_email}}"
+                           target="_blank"
+                           ng-bind="contract.feedback_email"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shadow-block__content shadow-block__content_min-tb-padding grey-color no-border"
+             ng-if="(contract.stateValue < 3) && (contract.cost.USDC != 0)"
+             ng-include="'/templates/common/contracts/promocode-field.html'"></div>
     </div>
-    <div class="shadow-block"
-         ng-if="(contract.stateValue < 3) && (contract.cost.WISH != 0)"
-         ng-include="'/templates/common/contracts/promocode-field.html'"></div>
 
     <div class="main-section-chapter-fieldset"
-         ng-include="'/templates/pages/contracts/preview/elements/buttons/' + getNetworkPath(contract.network) + '.html'"></div>
+         ng-if="!currentUser.is_ducx_admin || (currentUser.id === contract.user)"
+         ng-include="'/templates/pages/contracts/preview/elements/buttons/duc.html'"></div>
+
+    <div class="main-section-chapter-fieldset"
+         ng-if="currentUser.is_ducx_admin && (currentUser.id !== contract.user)"
+         ng-include="'/templates/pages/contracts/preview/elements/buttons/admin-duc.html'"></div>
 </div>
 

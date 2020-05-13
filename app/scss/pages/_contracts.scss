@@ -21,18 +21,18 @@
     top: 50%;
     margin-top: -0.5em;
   }
-  &_1, &_2 {
+  &_26483, &_26482, &_18, &_19 {
     &:before {
       transform: rotate(45deg);
     }
   }
-  &_1 {
-    color: #03babc;
+  &_26483, &_18 {
+    color: #776CA6;
     &:before {
-      background: #03babc;
+      background: #776CA6;
     }
   }
-  &_2 {
+  &_26482, &_19 {
     color: #ff3300;
     &:before {
       background: #ff3300;

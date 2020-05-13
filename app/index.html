@@ -33,11 +33,11 @@
 
     <meta name="msapplication-square310x310logo" content="/static/favicon/largetile.png" />
     <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#206EFF">
+    <meta name="theme-color" content="#862633">
     <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="#206EFF">
+    <meta name="msapplication-navbutton-color" content="#862633">
     <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="#206EFF">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#862633">
 
     <!-- for ios 7 style, multi-resolution icon of 152x152 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,16 +49,10 @@
 
     <%= socialScripts %>
 
-    <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-core.min.js"></script>
-    <script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-plugin-eosjs2.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/eosjs-ecc@4.0.4/lib/eosjs-ecc.min.js"
-            integrity="sha512-dYFDmK/d9r3/NCp6toLtfkwOjSMRBaEzaGAx1tfRItC0nsI0hVLERk05iNBQR7uDNI7ludYhcBI4vUiFHdjsTQ=="
-            crossorigin="anonymous"></script>
-
     <script src="/static/vendors/vendors.js"></script>
     <script src="/static/tpl/templates.tpl.js"></script>
     <script src="/static/ws/socket-client.js"></script>
-    <script src="/static/eos-lynx/eos-lynx.js"></script>
+
     <script src="/static/js/main.js"></script>
 
 </head>
@@ -79,35 +73,21 @@
                     <div class="user-balance">
                         <div class="user-balance-value">
 
-                            <div ng-if="sitemode === 'default'"
-                                 ng-click="currentUser.usdtBalance = !currentUser.usdtBalance">
+                            <i class="user-balance-icon icon-usdc"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
 
-                                <i class="icon-mywish user-balance-icon"
-                                   ng-if="!currentUser.usdtBalance">
-                                    <span class="path1"></span><span class="path2"></span>
-                                </i>
-                                <i class="icon-dollar user-balance-icon"
-                                   ng-if="currentUser.usdtBalance">
-                                </i>
-                            </div>
-
-                            <i class="user-balance-icon icon-eosish-logo" ng-if="sitemode === 'eos'"></i>
-                            <i class="user-balance-icon icon-tronish-logo" ng-if="sitemode === 'tron'"></i>
                             <div ui-sref="main.buytokens"
                                  class="text-left form-control-input_short small-input user-balance-value_input form-control-input">
-                                {{!currentUser.usdtBalance ? currentUser.visibleBalance : currentUser.visibleBalanceUSDT}}
+                                {{ currentUser.visibleBalance }}
                             </div>
 
                             <button class="btn only-icon user-balance-refresh"
                                     ng-class="{'in-progress': currentUser.balanceInRefresh}"
                                     ng-click="getCurrentBalance()">
-                                <img class="btn-icon refresh-icon" src="/static/images/refresher.svg" ng-if="sitemode === 'default'">
-                                <img class="btn-icon refresh-icon" src="/static/images/refresher-grey.svg" ng-if="sitemode === 'eos'">
-                                <img class="btn-icon refresh-icon" src="/static/images/refresher-red.svg" ng-if="sitemode === 'tron'">
+                                <img class="btn-icon refresh-icon" src="/static/images/refresher.svg">
                             </button>
                         </div>
                         <a ui-sref="main.buytokens" class="user-balance-buy btn btn-submit with-icon hide-ls">
-                            <i class="icon-create-contract"></i>
+                            <i class="icon-plus"></i>
                             <span translate="HEADER.BUTTONS.BUY"></span>
                         </a>
                     </div>
@@ -173,11 +153,10 @@
 </div>
 
 <%= endBodyScripts %>
-<%= bestRateWidget %>
 
-<!-- img src="/static/images/220px-Wikipe-tan_full_length.svg.png"
+<img src="/static/images/220px-Wikipe-tan_full_length.svg.png"
      ng-class="{visible: visibleGirl}"
-     class="anime-girl"/ -->
+     class="anime-girl"/>
 
 <div class="cookies-info" ng-if="notCookiesAccept" style="display: none;"
      ng-style="{display: notCookiesAccept ? 'block': 'none'}">

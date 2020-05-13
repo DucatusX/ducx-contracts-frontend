@@ -1,4 +1,13 @@
 angular.module('Services').service('contractService', function(requestService, API) {
+    const networks = {
+        1: 26483,
+        2: 26482
+    };
+    const revert_networks = {
+        26483: 1,
+        26482: 2
+    };
+
     return {
         getBalance: function (address, network) {
             var params = {
@@ -57,6 +66,7 @@ angular.module('Services').service('contractService', function(requestService, A
         },
         createContract: function (data) {
             data.network = parseInt(data.network);
+            data.network = revert_networks[data.network] || data.network;
             var params = {
                 path: API.CONTRACTS,
                 data: data
@@ -65,6 +75,7 @@ angular.module('Services').service('contractService', function(requestService, A
         },
         updateContract: function (data) {
             data.network = parseInt(data.network);
+            data.network = revert_networks[data.network] || data.network;
             var params = {
                 path: API.CONTRACTS + data.id + '/',
                 data: data,
@@ -92,13 +103,21 @@ angular.module('Services').service('contractService', function(requestService, A
                 path: API.CONTRACTS,
                 query: data
             };
-            return requestService.get(params);
+            return requestService.get(params).then(function(response) {
+                response.data.results.forEach(function(contract) {
+                    contract.network = networks[contract.network]  || contract.network;
+                });
+                return response;
+            });
         },
         getContract: function(contractId) {
             var params = {
                 path: API.CONTRACTS + contractId + '/'
             };
-            return requestService.get(params);
+            return requestService.get(params).then(function(response) {
+                response.data.network = networks[response.data.network] || response.data.network;
+                return response;
+            });
         },
         getContractForLink: function(contractKey) {
             var params = {
@@ -122,6 +141,16 @@ angular.module('Services').service('contractService', function(requestService, A
             var params = {
                 path: API.CONTRACTS + id + '/',
                 method: 'delete'
+            };
+            return requestService.post(params);
+        },
+        unConfirmContract: function(id) {
+            var params = {
+                path: 'cancel_ducatusx_contract/',
+                method: 'post',
+                data: {
+                    id: id
+                }
             };
             return requestService.post(params);
         },
@@ -150,6 +179,7 @@ angular.module('Services').service('contractService', function(requestService, A
             return requestService.post(params);
         },
         getTokenContracts: function(network) {
+            network = revert_networks[network] || network;
             var params = {
                 path: API.TOKEN_PARAMS,
                 query: {

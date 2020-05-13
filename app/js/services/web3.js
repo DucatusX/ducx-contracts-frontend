@@ -1,26 +1,20 @@
 angular.module('Services').service('web3Service', function($q, $rootScope, APP_CONSTANTS, $timeout, requestService, API) {
 
     if (!window.Web3) return;
-    var web3 = new Web3(), contract, _this = this;
+    var web3 = new Web3(), _this = this;
 
     /* Определение провайдеров клиентов */
     var web3Providers = {};
     var createWeb3Providers = function() {
-        var metamask, parity, infura;
         try {
-            var metaMaskProvider = Web3.givenProvider || new Web3.providers.WebsocketProvider("ws://localhost:8546");
+            var metaMaskProvider = Web3.givenProvider;
             if (metaMaskProvider.publicConfigStore) {
                 web3Providers['metamask'] = metaMaskProvider;
             }
-
         } catch(err) {
             console.log('Metamask not found');
         }
-        try {
-            web3Providers['parity'] = new Web3.providers.HttpProvider("http://localhost:8545");
-        } catch(err) {
-            console.log('Parity not found');
-        }
+
         try {
             web3Providers['infura'] = new Web3.providers.HttpProvider(APP_CONSTANTS.INFURA_ADDRESS);
         } catch(err) {
@@ -56,152 +50,75 @@ angular.module('Services').service('web3Service', function($q, $rootScope, APP_C
 
 
     this.setProviderByNumber = function(networkId) {
-
         networkId = networkId * 1;
-
         switch (networkId) {
-            case 1:
+            case 26483:
                 web3.setProvider(new Web3.providers.HttpProvider(isProduction ? APP_CONSTANTS.INFURA_ADDRESS : APP_CONSTANTS.ROPSTEN_INFURA_ADDRESS));
                 break;
-            case 2:
+            case 26482:
                 web3.setProvider(new Web3.providers.HttpProvider(APP_CONSTANTS.ROPSTEN_INFURA_ADDRESS));
-                break;
-            case 3:
-                web3.setProvider(new Web3.providers.HttpProvider(isProduction ? APP_CONSTANTS.RSK_NET_ADDRESS : APP_CONSTANTS.RSK_TESTNET_NET_ADDRESS));
-                break;
-            case 4:
-                web3.setProvider(new Web3.providers.HttpProvider(APP_CONSTANTS.RSK_TESTNET_NET_ADDRESS));
                 break;
         }
     };
 
+
     this.setProvider = function(providerName, network) {
 
         switch (network) {
+            case 26483:
+                network = isProduction ? network : 26482;
+                break;
             case 1:
-                network = isProduction ? network : 2;
+                network = isProduction ? network : 3;
                 break;
         }
 
         switch (providerName) {
             case 'metamask':
-
-                var networkVersion = web3Providers['metamask'].publicConfigStore._state.networkVersion;
-                if (
-                    ((networkVersion == 31) && (network == 4)) ||
-                    ((networkVersion == 30) && (network == 3)) ||
-                    ((networkVersion == 1) && (network == 1)) ||
-                    ((networkVersion == 3) && (network == 2))
-                ) {
+                var networkVersion = window['ethereum'].networkVersion;
+                if (networkVersion == network) {
                     currentProvider = web3Providers[providerName];
                     web3.setProvider(currentProvider);
                 }
                 break;
             default:
-                currentProvider = web3Providers[providerName];
-                web3.setProvider(currentProvider);
+                switch (network) {
+                    case 26483:
+                        web3.setProvider(new Web3.providers.HttpProvider(APP_CONSTANTS.INFURA_ADDRESS));
+                        break;
+                    case 26482:
+                        web3.setProvider(new Web3.providers.HttpProvider(APP_CONSTANTS.ROPSTEN_INFURA_ADDRESS));
+                        break;
+                }
         }
     };
 
     var checkMetamaskNetwork = function(network) {
         var networkVersion = parseInt(window['ethereum'].networkVersion, 10);
-        return ((networkVersion === 1) && (network === 1)) ||
-            ((networkVersion === 3) && (network === 2));
+        return networkVersion === network;
     };
 
-    var getMetamaskAccounts = function(providerName, network, callback) {
-        if (window['ethereum'] && window['ethereum'].isMetaMask) {
-            if (!checkMetamaskNetwork(network)) {
-                callback([]);
-                return;
-            }
-            // window['ethereum'].on('accountsChanged', (accounts) => {
-            //     observer.next({
-            //         type: providerName,
-            //         addresses: accounts
-            //     });
-            // });
-
-            window['ethereum'].enable().then(function(accounts) {
-                callback(accounts.map(function(wallet) {
-                    return {
-                        type: providerName,
-                        wallet: wallet
-                    }
-                }));
-            }, function() {
-                callback([]);
-            });
-        } else {
-            callback([]);
-        }
-    };
-
-    var getAccounts = function(providerName, network) {
-        var defer = $q.defer();
-        _this.setProvider(providerName, network);
-
-        if (providerName === 'metamask') {
-            $timeout(function() {
-                getMetamaskAccounts(providerName, network, defer.resolve);
-            });
-
-            return defer.promise;
-        }
-
-        try {
-            web3.eth.getAccounts(function(err, addresses) {
-                if (!addresses) {
-                    defer.resolve([]);
-                    return;
-                }
-                var accountsList = [];
-                addresses.map(function(wallet) {
-                    var walletModel = {
-                        type: providerName,
-                        wallet: wallet
-                    };
-                    accountsList.push(walletModel);
-                });
-                defer.resolve(accountsList);
-            });
-        } catch(err) {
-            $timeout(function() {
-                defer.resolve([]);
-            });
-        }
-
-        return defer.promise;
-    };
-
-    var accountsList;
     this.getAccounts = function(network) {
-        accountsList = [];
-        var defer = $q.defer();
-        var countProviders = 0;
-
         switch (network) {
+            case 26483:
+                network = isProduction ? network : 26482;
+                break;
             case 1:
-                network = isProduction ? network : 2;
+                network = isProduction ? network : 3;
                 break;
         }
 
-        for (var clientName in web3Providers) {
-            countProviders++;
-            getAccounts(clientName, network).then(function(result) {
-                countProviders--;
-                accountsList = accountsList.concat(result);
-                if (!countProviders) {
-                    defer.resolve(accountsList);
+        return new Promise(function(resolve) {
+            if (window['ethereum'] && window['ethereum'].isMetaMask) {
+                if (!checkMetamaskNetwork(network)) {
+                    resolve([]);
+                    return;
                 }
-            }, function() {
-                countProviders--;
-                if (!countProviders) {
-                    defer.resolve(accountsList);
-                }
-            });
-        }
-        return defer.promise;
+                return window['ethereum'].enable().then(resolve);
+            }
+        });
+
+
     };
 
     this.getBalance = function(address) {

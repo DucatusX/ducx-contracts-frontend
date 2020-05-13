@@ -1,6 +1,6 @@
 var module = angular.module('Directives');
 module.directive('ngBarChart', function($rootScope) {
-    var colors = ['#206EFF', '#024EA1', '#FFD902', '#EE7023', 'rgb(29, 161, 2)', 'rgb(161, 2, 158)'];
+    var colors = ['#842734', '#024EA1', '#FFD902', '#EE7023', 'rgb(29, 161, 2)', 'rgb(161, 2, 158)'];
     return {
         restrict: 'A',
         replace: true,
@@ -25,6 +25,7 @@ module.directive('ngBarChart', function($rootScope) {
 
                 $scope.originalSvgHeight = 400;
                 $scope.svgHeight = $scope.originalSvgHeight * (svgElement.width() / 1000);
+
                 svgElement.height($scope.svgHeight);
 
 
@@ -61,9 +62,8 @@ module.directive('ngBarChart', function($rootScope) {
             };
 
             $scope.$watch('ngBarChart.data', function(data) {
-                checkChartData();
+                setTimeout(checkChartData);
             });
-
         }
     }
 });

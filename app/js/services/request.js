@@ -1,4 +1,4 @@
-angular.module('Services').service('requestService', function($http, API, GITHUB_ISSUER, $rootScope, $q) {
+angular.module('Services').service('requestService', function($http, API, $rootScope, $q) {
 
     var sendErrorsIssuer = function(response) {
         switch (response.status) {
@@ -6,24 +6,7 @@ angular.module('Services').service('requestService', function($http, API, GITHUB
                 $rootScope.globalError = {
                     text: "Internal service error.\nClick on the message to send us information",
                     type: 'error',
-                    onclick: function() {
-                        $http.post('https://api.github.com/repos/' +
-                            GITHUB_ISSUER.USER + '/' + GITHUB_ISSUER.REPO +
-                            '/issues?access_token=' + GITHUB_ISSUER.ACCESS_TOKEN, {
-                            "title": "Error #500: " + response.config.url,
-                            "body": response.data,
-                            "assignees": [
-                                "aleksei-udalov"
-                            ],
-                            "labels": [
-                                $rootScope.isProduction ? 'production' : ($rootScope.isDevelop ? 'develop' : 'test')
-                            ]
-                        }, {
-                            headers: {
-                                Accept: 'application/vnd.github.symmetra-preview+json'
-                            }
-                        });
-                    }
+                    onclick: function() {}
                 };
                 break;
             case -1:

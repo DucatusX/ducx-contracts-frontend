@@ -1,30 +1,22 @@
 angular.module('app').controller('tokenCreateController', function($scope, contractService, $timeout, $state, $rootScope, NETWORKS_TYPES_CONSTANTS,
-                                                                      CONTRACT_TYPES_CONSTANTS, openedContract, $stateParams, $filter) {
+                                                                      CONTRACT_TYPES_CONSTANTS, openedContract, $stateParams, currentUser) {
+
+    var user = currentUser.data;
 
     var contract = openedContract && openedContract.data ? openedContract.data : {
         network: $stateParams.network,
+        feedback_email: !user.is_social ? user.latest_feedback_email || user.username : '',
         contract_details: {
             token_holders: []
         }
     };
+
+    $scope.feedback_email = contract.feedback_email;
     $scope.network = contract.network * 1;
 
-    if ($scope.network === 1) {
-        contract.contract_details.authio_email =
-            $filter('isEmail')($rootScope.currentUser.username) ? $rootScope.currentUser.username : undefined;
-    }
+    contract.contract_details.token_type = 'ERC20';
+    $scope.blockchain = 'ETH';
 
-    switch ($scope.network) {
-        case 1:
-        case 2:
-            contract.contract_details.token_type = 'ERC20';
-            $scope.blockchain = 'ETH';
-            break;
-        case 5:
-        case 6:
-            $scope.blockchain = 'NEO';
-            break;
-    }
 
     $scope.minStartDate = moment().add(1, 'days');
 
@@ -85,7 +77,7 @@ angular.module('app').controller('tokenCreateController', function($scope, contr
         $scope.contractName = contract.name;
         $scope.minStartDate = moment();
         $scope.token_holders = angular.copy($scope.request.token_holders);
-
+        $scope.feedback_email = contract.feedback_email;
         $scope.agreed = contract.id && contract.contract_details.authio;
 
         var powerNumber = new BigNumber('10').toPower($scope.request.decimals || 0);
@@ -132,19 +124,12 @@ angular.module('app').controller('tokenCreateController', function($scope, contr
 
         var contractDetails = angular.copy($scope.request);
         contractDetails.decimals = contractDetails.decimals * 1;
-        if ($scope.blockchain === 'NEO') {
-            contractDetails.token_short_name = contractDetails.token_short_name.toUpperCase();
-        }
-
-        if ($scope.network === 1) {
-            contractDetails.authio = !!contractDetails.authio;
-            contractDetails.authio_email = contractDetails.authio ? contractDetails.authio_email : null;
-        }
 
         return {
+            feedback_email: $scope.feedback_email,
             name: $scope.request.token_name,
             network: contract.network,
-            contract_type: $scope.blockchain !== 'NEO' ? CONTRACT_TYPES_CONSTANTS.TOKEN : CONTRACT_TYPES_CONSTANTS.TOKEN_NEO,
+            contract_type: CONTRACT_TYPES_CONSTANTS.TOKEN,
             contract_details: contractDetails,
             id: contract.id
         };
@@ -183,7 +168,7 @@ angular.module('app').controller('tokenCreateController', function($scope, contr
         if (localStorage.draftContract) {
             if (!contract.id) {
                 var draftContract = JSON.parse(localStorage.draftContract);
-                if ((draftContract.contract_type == CONTRACT_TYPES_CONSTANTS.TOKEN) || (draftContract.contract_type == CONTRACT_TYPES_CONSTANTS.TOKEN_NEO)) {
+                if (draftContract.contract_type == CONTRACT_TYPES_CONSTANTS.TOKEN) {
                     contract = draftContract;
                 }
             }

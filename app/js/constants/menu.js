@@ -28,60 +28,10 @@ angular.module('Constants').constant('MENU_CONSTANTS', [
         route: 'main.buytokens',
         noactive: false
     }, {
-        title: 'MAIN_MENU.WISH_SWAP',
-        icon: 'icon-binance',
-        route: 'main.swapbwish'
-    },/*{
-        title: 'MAIN_MENU.JOIN_AIRDROP',
-        icon: 'icon-eosish-circle',
-        route: 'main.join_airdrop',
-        not: {
-            mode: ['tron']
-        }
-    }, {
-        title: 'MAIN_MENU.EOSISH_CALCULATOR',
-        icon: 'icon-eosish-circle',
-        route: 'main.eosish_calculator',
-        not: {
-            mode: ['tron']
-        }
-    }, */{
-        title: 'MAIN_MENU.EXTERNAL_DEVELOPERS',
-        icon: 'icon-framew',
-        route: 'main.extdevs'
-    }, {
-        title: 'MAIN_MENU.MESSAGES',
-        icon: 'icon-mail',
-        route: 'main.messages',
-        noactive: true,
-        noshow: true
-    }, {
-        title: 'MAIN_MENU.ADDRESS_BOOK',
-        icon: 'icon-phone-call',
-        route: 'main.contacts',
-        noactive: true,
-        noshow: true
-    }, {
-        title: 'MAIN_MENU.FAQ',
-        icon: 'icon-question',
-        route: 'main.faq',
-        noactive: true,
-        noshow: true
-    }, {
-        title: 'Developer API',
-        icon: 'icon-framew',
-        route: 'main.api'
-    }, {
         title: 'MAIN_MENU.SUPPORT',
         icon: 'icon-at',
         static: true,
         url: 'support@mywish.io',
         type: 'mail'
-    },
-    // {
-    //     title: 'Log out',
-    //     icon: 'icon-exit',
-    //     route: 'exit',
-    //     hideForUser: 'is_ghost'
-    // }
+    }
 ]);

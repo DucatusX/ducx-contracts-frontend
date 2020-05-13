@@ -36,6 +36,7 @@
     <span translate="CONTRACTS_BUTTONS.LAUNCH"></span>
 </button>
 
+
 <!-- Deposit instruction button -->
 <button ng-if="(contract.stateValue == 4) && ((contract.contract_type == 1) || (contract.contract_type == 2) || (contract.contract_type == 0))"
         ng-pop-up="{
@@ -339,12 +340,12 @@
 
 
 <!-- Authio form button -->
-<a ng-if="((contract.stateValue == 4) || (contract.stateValue == 11)) && (contract.contract_type == 5) && !contract.contract_details.authio"
-   ui-sref="main.contracts.preview.byId({id: contract.id, '#': 'tab-audit'})"
-   class="btn btn-transparent hide-ps">
-    <i class="icon-note-list"></i>
-    <span>Branded report</span>
-</a>
+<!--<a ng-if="((contract.stateValue == 4) || (contract.stateValue == 11)) && (contract.contract_type == 5) && !contract.contract_details.authio"-->
+   <!--ui-sref="main.contracts.preview.byId({id: contract.id, '#': 'tab-audit'})"-->
+   <!--class="btn btn-transparent hide-ps">-->
+    <!--<i class="icon-note-list"></i>-->
+    <!--<span>Branded report</span>-->
+<!--</a>-->
 
 
 

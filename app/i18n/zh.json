@@ -12,6 +12,8 @@
   "MONTHS": "月",
   "YEARS":"年",
   "DAYS": "天",
+  "FEEDBACK_EMAIL": "Contact email",
+  "FEEDBACK_EMAIL_DESCRIPTION": "Will be used for feedback and notifications",
   "MAIN_MENU": {
     "UNKNOWN_USER": "未知用户",
     "UNKNOWN": "未知",
@@ -38,6 +40,7 @@
     "CREATED": "创建",
     "WAITING_FOR_PAYMENT": "等待付款",
     "WAITING_FOR_DEPLOYMENT": "等待部署",
+    "WAITING_FOR_CONFIRMATION": "Waiting for confirmation",
     "ACTIVE": "活跃",
     "EXPIRED": "过期",
     "CANCELLED": "取消",
@@ -52,8 +55,8 @@
     "CREATING": "正在生成"
   },
   "CONTRACTS_NETWORKS": {
-    "NETWORK_1": "Main Ethereum Network",
-    "NETWORK_2": "Ropsten Test Net",
+    "NETWORK_26483": "Main DucatusX Network",
+    "NETWORK_26482": "Test DucatusX Network",
     "NETWORK_3": "RSK Network",
     "NETWORK_4": "RSK Testnet faucet",
     "NETWORK_5": "NEO MainNet",
@@ -61,7 +64,9 @@
     "NETWORK_10": "EOS MainNet",
     "NETWORK_11": "EOS TestNet",
     "NETWORK_14": "TRON MainNet",
-    "NETWORK_15": "TRON TestNet"
+    "NETWORK_15": "TRON TestNet",
+    "NETWORK_18": "Main DucatusX Network",
+    "NETWORK_19": "Test DucatusX Network"
   },
   "BUTTONS": {
     "ENABLE": "启用",
@@ -149,11 +154,7 @@
     "ADDRESS_NOT_CHECKSUMMED": "地址不是校验和"
   },
   "BLOCKCHAIN_NETWORKS": {
-    "ETH": "ETH",
-    "BTC": "BTC",
-    "NEO": "NEO",
-    "EOS": "EOS",
-    "TRON": "TRON"
+    "DUCX": "DucatusX"
   },
   "ALERTS": {
     "SCATTER_INSTALL": {
@@ -299,15 +300,15 @@
       },
       "AIRDROP": {
         "TITLE": "空投",
-        "DESCRIPTION": "将ERC-20/ERC-223代币分发到许多地址（例如赏金计划或者公开销售）"
+        "DESCRIPTION": "将DRC-20/DRC-223代币分发到许多地址（例如赏金计划或者公开销售）"
       },
       "EOS_AIRDROP": {
         "TITLE": "空投",
-        "DESCRIPTION": "将ERC-20/ERC-223代币分发到许多地址（例如赏金计划或者公开销售）"
+        "DESCRIPTION": "将DRC-20/DRC-223代币分发到许多地址（例如赏金计划或者公开销售）"
       },
       "INVESTMENT_POOL": {
         "TITLE": "投资池",
-        "DESCRIPTION": "需在投资前收集ETH合， 创建它并与他人共享地址"
+        "DESCRIPTION": "需在投资前收集DUCX合， 创建它并与他人共享地址"
       },
       "LOST_KEY": {
         "TITLE": "遗失私钥",
@@ -319,7 +320,7 @@
       },
       "ETH_LOST_KEY": {
         "TITLE": "Lost key for Tokens",
-        "DESCRIPTION": "The Lost Key smart contract ensures your (ERC-20 standard) tokens and redirects them to backup wallets, if you lost the access/private key or in case of a long inactivity period of time (death, accidents, etc..)."
+        "DESCRIPTION": "The Lost Key smart contract ensures your (DRC-20 standard) tokens and redirects them to backup wallets, if you lost the access/private key or in case of a long inactivity period of time (death, accidents, etc..)."
       },
       "DEFERRED": {
         "TITLE": "延期付款",
@@ -343,7 +344,7 @@
           "LIST_ITEM_1": " 测试网中的合约可以免费使用（您可以在测试网创建并部署合约）",
           "LIST_ITEM_2": "请接受低速部署（长达3小时）",
           "LIST_ITEM_3": "测试网/主网中的合约代码相同",
-          "LIST_ITEM_4_OLD": "处理合约时请使用测试网地址（Ropsten代表ETH）",
+          "LIST_ITEM_4_OLD": "处理合约时请使用测试网地址（Ropsten代表DUCX）",
           "LIST_ITEM_4": "处理合约时请使用测试网地址"
         }
       },
@@ -414,11 +415,8 @@
       "CHOOSE_REPLENISH_METHOD": "选择补充方法",
       "CHOOSE_PAYMENT_METHOD": "选择付款方式：",
       "CHOOSE_WALLET": "选择你的钱包：",
-      "SEND_WISH": "发送SWAP代币到：",
-      "SEND_ETH": "发送您的ETH到：",
-      "SEND_BTC": "发送您的BTC到：",
-      "SEND_BNB": "Send your BNB to:",
-      "SEND_BWISH": "Send WISH-1EF to:",
+      "SEND_USDC": "发送USDC代币到：",
+      "SEND_DUCX": "发送您的DUCX到：",
       "ENTER_AMOUNT": "输入金额：",
       "BTC_ATTENTION": {
         "RED_TEXT": "注意！",
@@ -433,7 +431,7 @@
           "LIST_ITEM_1": "打开你的钱包",
           "LIST_ITEM_2": "选择钱包中的发送以太币&其他代币标签",
           "LIST_ITEM_3": "插入以下收件人的地址：",
-          "LIST_ITEM_4": "输入要发送的金额并选择ETH或WISH ",
+          "LIST_ITEM_4": "输入要发送的金额并选择DUCX或WISH ",
           "LIST_ITEM_5": "将GAS数量限额设为30000",
           "LIST_ITEM_6": "点击生成交易",
           "LIST_ITEM_7": "点击“完成”按钮确认付款"
@@ -615,7 +613,7 @@
         "DESCRIPTION": "To unfreeze the tokens in your wallet, please follow the instructions.",
         "LIST": {
           "ITEM_1": "Open your wallet (Parity, <a href=\"{{depositUrl}}\" target=\"_blank\">MyEtherWallet</a>)",
-          "ITEM_2": "Choose Send Ether & Tokens tab in your wallet",
+          "ITEM_2": "Choose Send DucatusX & Tokens tab in your wallet",
           "ITEM_3": "Enter token contract address:",
           "ITEM_4": "Specify Gas limit 100000",
           "ITEM_5": "Input Data:",
@@ -628,7 +626,7 @@
         "DESCRIPTION": "In order for investors to receive funds back, provide them with the following instruction.",
         "LIST": {
           "ITEM_1": "Open your wallet (Parity, <a href=\"{{depositUrl}}\" target=\"_blank\">MyEtherWallet</a>)",
-          "ITEM_2": "Choose Send Ether & Tokens tab in your wallet",
+          "ITEM_2": "Choose Send DucatusX & Tokens tab in your wallet",
           "ITEM_3": "Enter token contract address:",
           "ITEM_4": "Specify Gas limit 100000",
           "ITEM_5": "Input Data:",
@@ -637,10 +635,10 @@
         }
       },
       "ANY_TRANSACTION": {
-        "PART_1": "从您的管理地址发送交易（{{amount||'0'}} ETH）",
+        "PART_1": "从您的管理地址发送交易（{{amount||'0'}} DUCX）",
         "PART_2": "发送至合约地址",
         "PART_3": "含有数据字段",
-        "PART_GUEST": "发送交易 ({{amount||'0'}} ETH) 到合同地址",
+        "PART_GUEST": "发送交易 ({{amount||'0'}} DUCX) 到合同地址",
         "GAS_LIMIT": "交易费用限制"
       },
       "ACTIVATE": {
@@ -667,7 +665,7 @@
           "ITEM_1": "打开你的钱包(Parity, <a href=\"{{depositUrl}}\" target=\"_blank\">MyEtherWallet</a>)",
           "ITEM_2": "选择钱包中的发送以太币&其他代币标签",
           "ITEM_3": "插入以下收件人的地址：",
-          "ITEM_4": "设定ETH的发送数额（发送字段显示的数额）",
+          "ITEM_4": "设定DUCX的发送数额（发送字段显示的数额）",
           "ITEM_5": "将GAS交易量限额设为30000",
           "ITEM_6": "点击生成交易",
           "ITEM_7": "点击按钮\"{{'BUTTONS.DONE'|translate}}\""
@@ -733,7 +731,7 @@
       },
       "SEND_FUNDS": {
         "TITLE": "发送资金",
-        "DESCRIPTION": "用于发送到 ({{amount}} ETH) 目的地地址({{address}}) 请执行以下步骤："
+        "DESCRIPTION": "用于发送到 ({{amount}} DUCX) 目的地地址({{address}}) 请执行以下步骤："
       },
       "GET_TOKENS": {
         "TITLE": "得到代币",
@@ -897,13 +895,13 @@
         "FIELDS": {
           "MANAGEMENT_ADDR": {
             "LABEL": "管理地址",
-            "PLACEHOLDER": "输入您的ETH钱包地址",
+            "PLACEHOLDER": "输入您的DUCX钱包地址",
             "DESCRIPTION": "该地址的所有者将拥有该合约（唯一的）的管理权"
           },
           "SEND_TO_WALLET": {
             "LABEL": "发送到钱包",
             "PLACEHOLDER": "输入接收人的钱包地址",
-            "DESCRIPTION": "输入接收人的ETH地址。 该地址将作为转账接收地址。"
+            "DESCRIPTION": "输入接收人的DUCX地址。 该地址将作为转账接收地址。"
           },
           "NOTIFICATION_EMAIL": {
             "LABEL": "用于接收通知的电子邮箱",
@@ -922,7 +920,7 @@
         "FIELDS": {
           "MANAGEMENT_ADDR": {
             "LABEL": "管理地址：",
-            "PLACEHOLDER": "输入您的ETH钱包地址",
+            "PLACEHOLDER": "输入您的DUCX钱包地址",
             "DESCRIPTION": "该地址的所有者将能够管理合同（这是唯一的合同）"
           },
           "TOKEN_ADDRESS_ON_OFF": {
@@ -939,7 +937,7 @@
           },
           "SOFT_CAP": {
             "LABEL": "币池容积（最小）",
-            "DESCRIPTION": "定义投资所需的最低ETH。如果没有达到最低限度 - 将退回贡献者们的ETH。您可以将其设置为0（无最小值）"
+            "DESCRIPTION": "定义投资所需的最低DUCX。如果没有达到最低限度 - 将退回贡献者们的DUCX。您可以将其设置为0（无最小值）"
           },
           "START_DATE": {
             "LABEL": "开始日期",
@@ -959,7 +957,7 @@
           },
           "MIN_MAX_INVESTMENTS": {
             "LABEL": "最小和最大投资限制",
-            "DESCRIPTION": "您可以指定可接受的最小/最大投资额/（{{currency||'ETH'}}）。 例如，接受0.05 {{currency||'ETH'}}至3000 {{currency||'ETH'}}区间的投资额"
+            "DESCRIPTION": "您可以指定可接受的最小/最大投资额/（{{currency||'DUCX'}}）。 例如，接受0.05 {{currency||'DUCX'}}至3000 {{currency||'DUCX'}}区间的投资额"
           },
           "MIN_INVESTMENTS": {
             "LABEL": "最低限度",
@@ -975,7 +973,7 @@
           },
           "INVESTMENT_ADDRESS": {
             "LABEL": "目的地址：",
-            "DESCRIPTION": "ETH地址用于发送池中所有的资金。它可以是合同地址。在提交之前请仔细检查它。"
+            "DESCRIPTION": "DUCX地址用于发送池中所有的资金。它可以是合同地址。在提交之前请仔细检查它。"
           },
           "BONUS": {
             "LABEL": "池所有者的个人奖励（在代币中）：",
@@ -1011,7 +1009,7 @@
         "FIELDS": {
           "MANAGEMENT_ADDR": {
             "LABEL": "管理地址",
-            "PLACEHOLDER": "输入您的ETH钱包地址",
+            "PLACEHOLDER": "输入您的DUCX钱包地址",
             "DESCRIPTION": "该地址的所有者将拥有该合约（唯一的）的管理权"
           },
           "RESERVE_ADDRESS": {
@@ -1053,7 +1051,7 @@
           "MANAGEMENT_ADDR": {
             "LABEL": "管理地址",
             "PLACEHOLDER": "输入您的{{networkName}}钱包地址",
-            "ETH_DESCRIPTION": " ETH地址（不是交易地址）。 该地址将管理遗嘱合约。 仔细检查地址（及其访问权限）后再提交",
+            "ETH_DESCRIPTION": " DUCX地址（不是交易地址）。 该地址将管理遗嘱合约。 仔细检查地址（及其访问权限）后再提交",
             "RSK_DESCRIPTION": "该地址将管理您的合约。 你可以使用<a tabindex=\"-1\" href=\"https://jaxx.io/\" target=\"_blank\">Jaxx</a>创建地址。仔细检查后再提交。"
           },
           "YOUR_EMAIL": {
@@ -1064,7 +1062,7 @@
           "BENEFICIARY_ADDR": {
             "LABEL": "受益人地址",
             "PLACEHOLDER": "输入{{networkName}}地址",
-            "ETH_DESCRIPTION": "输入受益人的ETH地址。 合约执行后，资金将被发送到该地址。",
+            "ETH_DESCRIPTION": "输入受益人的DUCX地址。 合约执行后，资金将被发送到该地址。",
             "RSK_DESCRIPTION": "输入受益人的RSK地址。 合约执行后，资金将被发送到该地址。 继承人可以使用<a tabindex=\"-1\" href=\"https://jaxx.io/\" target=\"_blank\">jaxx</a> 创建地址."
           },
           "SHARE": {
@@ -1145,12 +1143,12 @@
         "FIELDS": {
           "TOKEN_NAME": {
             "LABEL": "代币名称：",
-            "DESCRIPTION": "输入项目名称，去掉空格，通常为5-25个符号，大小写均可"
+            "DESCRIPTION": "输入项目名称，去掉空格，通常为8个符号，大小写均可"
           },
           "TOKEN_SYMBOL": {
             "LABEL": "代币符号：",
-            "DESCRIPTION": "通常有3-4个字母，例如ETH，BTC，NEO，WISH等。请在提交之前检查它是否是唯一的(<a tabindex=\"-1\" href=\"https://etherscan.com/tokens\" target=\"_blank\">https://etherscan.com/tokens</a>)",
-            "DESCRIPTION_TRON": "通常有3-4个字母，例如ETH，BTC，NEO，WISH等。",
+            "DESCRIPTION": "通常有3-4个字母，例如DUCX，BTC，NEO，WISH等。请在提交之前检查它是否是唯一的",
+            "DESCRIPTION_TRON": "通常有3-4个字母，例如DUCX，BTC，NEO，WISH等。",
             "DESCRIPTION_NEO": "该符号应该较短（建议使用3-8个字符），不得有空白字符或换行符，并应限制为大写拉丁字母（即英文中使用的26个字母）"
           },
           "DECIMALS": {
@@ -1159,8 +1157,8 @@
           },
           "TOKEN_TYPE": {
             "LABEL": "选择代币类型",
-            "DESCRIPTION_1": " ERC-20是推荐项，被大多数交易所接受。",
-            "DESCRIPTION_2": " ERC-223与ERC-20几乎相同，代币转账安全性更高"
+            "DESCRIPTION_1": " DRC-20是推荐项，被大多数交易所接受。",
+            "DESCRIPTION_2": " DRC-223与DRC-20几乎相同，代币转账安全性更高"
           },
           "TOKEN_OWNER": {
             "LABEL": "代币所有者",
@@ -1193,7 +1191,7 @@
           },
           "AUTHIO": {
             "LABEL": "Branded report",
-            "DESCRIPTION": "Branded report is needed for exchanges and gives the estimation of the security of your token contract. Every contract is verified independently. Please <a href=\"https://www.oceanico.io/audit-reports/Sample-of-audit-report.pdf\" target=\"_blank\">check the example</a>. <br/><b>Branded report cost is 3 ETH</b>.",
+            "DESCRIPTION": "Branded report is needed for exchanges and gives the estimation of the security of your token contract. Every contract is verified independently. Please <a href=\"https://www.oceanico.io/audit-reports/Sample-of-audit-report.pdf\" target=\"_blank\">check the example</a>. <br/><b>Branded report cost is 3 DUCX</b>.",
             "SECOND_DESCRIPTION": "<a href=\"https://www.oceanico.io/\" target=\"_blank\">This service</a> is run by independent US based company specialised in&nbsp;security analyze.",
             "EMAIL_LABEL": "To request a branded report please enter your email",
             "EMAIL_DESCRIPTION": "At this address you will receive an branded report of your contract. Please be careful and check it again.",
@@ -1239,7 +1237,7 @@
           },
           "STORAGE_ADDRESS": {
             "LABEL": "投资存储地址",
-            "DESCRIPTION": " ETH地址（不是交易地址）。 如果资金总额达到软上限，所有资金将在结束后发送到该地址。仔细检查后再输入地址"
+            "DESCRIPTION": " DUCX地址（不是交易地址）。 如果资金总额达到软上限，所有资金将在结束后发送到该地址。仔细检查后再输入地址"
           },
           "TOKEN_RATE": {
             "LABEL": "代币率",
@@ -1280,7 +1278,7 @@
           },
           "MIN_MAX_INVESTMENTS": {
             "LABEL": "最小和最大投资限制",
-            "DESCRIPTION": "您可以指定可接受的最小/最大投资额/（{{currency||'ETH'}}）。 例如，接受0.05 {{currency||'ETH'}}至3000 {{currency||'ETH'}}区间的投资额"
+            "DESCRIPTION": "您可以指定可接受的最小/最大投资额/（{{currency||'DUCX'}}）。 例如，接受0.05 {{currency||'DUCX'}}至3000 {{currency||'DUCX'}}区间的投资额"
           },
           "MIN_INVESTMENTS": {
             "LABEL": "投资额下限",
@@ -1320,7 +1318,7 @@
             "LABEL": "最大金额",
             "DESCRIPTION": "获得指定奖金的最大贡献额{{last ? ' (如果没有限制，您可以将其留空)' : ''}}"
           },
-          "AMOUNT_BONUS_DESCRIPTION": "您可以根据贡献金额定义奖金额。 例如，为10个以上的ETH贡献者奖励额外的5％代币"
+          "AMOUNT_BONUS_DESCRIPTION": "您可以根据贡献金额定义奖金额。 例如，为10个以上的DUCX贡献者奖励额外的5％代币"
         }
       },
       "AIRDROP": {
@@ -1329,7 +1327,7 @@
         "FIELDS": {
           "MANAGEMENT_ADDR": {
             "LABEL": "管理地址",
-            "PLACEHOLDER": "输入您的ETH钱包地址",
+            "PLACEHOLDER": "输入您的DUCX钱包地址",
             "DESCRIPTION": "该地址的所有者将拥有该合约（唯一的）的管理权"
           },
           "TOKEN_ADDR": {
@@ -1525,7 +1523,7 @@
           "AUDITED_DATE": "The planned date of the branded report: {{auditedDate|date:'yyyy-MM-dd'}}",
           "SUPPORT_DESCRIPTION": "If you have questions? you can send them to us at <a href=\"mailto:support@mywish.io\">support@mywish.io</a> or livechat.<br/> We will contact you as soon as possible.",
           "FORM_TEXTS": {
-            "PART_1": "Oceanico is a full service smart contract security firm focused of mitigating technical debt and security risk for projects building decentralised applications on Ethereum. <a href=\"https://www.oceanico.io/\" target=\"_blank\">Learn more</a>",
+            "PART_1": "Oceanico is a full service smart contract security firm focused of mitigating technical debt and security risk for projects building decentralised applications on DucatusX. <a href=\"https://www.oceanico.io/\" target=\"_blank\">Learn more</a>",
             "PART_2": "What you get:<br/> 1. A beautifully designed branded report with your company's branding (name, logo, URL)<br/> 2. A credible attestation that your token contracts have passed review and testing by security experts<br/> <a href=\"https://www.oceanico.io/audit-reports/Sample-of-audit-report.pdf\" target=\"_blank\">Check an example</a>"
           },
           "FORM_NOTICE": "The branded report will be delivered in 3 working days by email after the date of payment.",
@@ -1584,7 +1582,7 @@
           "PROGRESS": "提高了进度",
           "MIN": "最小",
           "MAX": "最大",
-          "TOTAL": "募集总额：{{amount}} {{currency || 'ETH'}}",
+          "TOTAL": "募集总额：{{amount}} {{currency || 'DUCX'}}",
           "DAY": "(天： +{{percent}}%)"
         }
       },

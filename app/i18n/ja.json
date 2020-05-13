@@ -12,6 +12,8 @@
   "MONTHS": "ヶ月",
   "YEARS":"年々",
   "DAYS": "日々",
+  "FEEDBACK_EMAIL": "Contact email",
+  "FEEDBACK_EMAIL_DESCRIPTION": "Will be used for feedback and notifications",
   "MAIN_MENU": {
     "UNKNOWN_USER": "不明なユーザー",
     "UNKNOWN": "不明",
@@ -38,6 +40,7 @@
     "CREATED": "作成した",
     "WAITING_FOR_PAYMENT": "支払い待ち",
     "WAITING_FOR_DEPLOYMENT": "デプロイメント待ち",
+    "WAITING_FOR_CONFIRMATION": "Waiting for confirmation",
     "ACTIVE": "アクティブ",
     "EXPIRED": "失効した",
     "CANCELLED": "キャンセルされた",
@@ -52,8 +55,8 @@
     "CREATING": "Creating"
   },
   "CONTRACTS_NETWORKS": {
-    "NETWORK_1": "Main Ethereum Network",
-    "NETWORK_2": "Ropsten Test Net",
+    "NETWORK_26483": "Main DucatusX Network",
+    "NETWORK_26482": "Test DucatusX Network",
     "NETWORK_3": "RSK Network",
     "NETWORK_4": "RSK Testnet faucet",
     "NETWORK_5": "NEO MainNet",
@@ -61,7 +64,9 @@
     "NETWORK_10": "EOS MainNet",
     "NETWORK_11": "EOS TestNet",
     "NETWORK_14": "TRON MainNet",
-    "NETWORK_15": "TRON TestNet"
+    "NETWORK_15": "TRON TestNet",
+    "NETWORK_18": "Main DucatusX Network",
+    "NETWORK_19": "Test DucatusX Network"
   },
   "BUTTONS": {
     "ENABLE": "有効にする",
@@ -149,11 +154,7 @@
     "ADDRESS_NOT_CHECKSUMMED": "アドレスはチェックサムされていません"
   },
   "BLOCKCHAIN_NETWORKS": {
-    "ETH": "Ethereum",
-    "BTC": "Bitcoin",
-    "NEO": "NEO",
-    "EOS": "EOS",
-    "TRON": "TRON"
+    "DUCX": "DucatusX"
   },
   "ALERTS": {
     "SCATTER_INSTALL": {
@@ -299,7 +300,7 @@
       },
       "AIRDROP": {
         "TITLE": "Airdrop",
-        "DESCRIPTION": "多くのアドレスにERC-20トークンを配布する（例えば、バウンティプログラムまたはクラウドセール後）"
+        "DESCRIPTION": "多くのアドレスにDRC-20トークンを配布する（例えば、バウンティプログラムまたはクラウドセール後）"
       },
       "EOS_AIRDROP": {
         "TITLE": "Airdrop",
@@ -307,11 +308,11 @@
       },
       "INVESTMENT_POOL": {
         "TITLE": "投資プール",
-        "DESCRIPTION": "ETHの蓄積のための契約は、投資の前にあります。それを作成し、そのアドレスを他の人と共有する。"
+        "DESCRIPTION": "DUCXの蓄積のための契約は、投資の前にあります。それを作成し、そのアドレスを他の人と共有する。"
       },
       "LOST_KEY": {
         "TITLE": "失われたキー",
-        "DESCRIPTION": "スマート契約は、標準のEthereumウォレットと同じ機能を備えています。また、アクセス/秘密キーを失うと、資金をバックアップウォレットにリダイレクトします。"
+        "DESCRIPTION": "スマート契約は、標準のDucatusXウォレットと同じ機能を備えています。また、アクセス/秘密キーを失うと、資金をバックアップウォレットにリダイレクトします。"
       },
       "TRON_LOST_KEY": {
         "TITLE": "Lost key for Tokens",
@@ -319,7 +320,7 @@
       },
       "ETH_LOST_KEY": {
         "TITLE": "Lost key for Tokens",
-        "DESCRIPTION": "The Lost Key smart contract ensures your (ERC-20 standard) tokens and redirects them to backup wallets, if you lost the access/private key or in case of a long inactivity period of time (death, accidents, etc..)."
+        "DESCRIPTION": "The Lost Key smart contract ensures your (DRC-20 standard) tokens and redirects them to backup wallets, if you lost the access/private key or in case of a long inactivity period of time (death, accidents, etc..)."
       },
       "DEFERRED": {
         "TITLE": "後払い",
@@ -343,7 +344,7 @@
           "LIST_ITEM_1": "テストネットへの契約は、使用のために無料です。（あなたが作成＆テストネットワークにデプロイすることができます）",
           "LIST_ITEM_2": "デプロイメントのための低速を受け入れてください（最大3時間）",
           "LIST_ITEM_3": "テスト/メインネットワークの契約には同じコードがあります",
-          "LIST_ITEM_4_OLD": "契約を扱う時にテストネットアドレス（ETHの場合はRopsten）を使用してください",
+          "LIST_ITEM_4_OLD": "契約を扱う時にテストネットアドレス（DUCXの場合はRopsten）を使用してください",
           "LIST_ITEM_4": "契約を扱う時にテストネットアドレス を使用してください"
         }
       },
@@ -414,12 +415,8 @@
       "CHOOSE_REPLENISH_METHOD": "補充方法を選択する",
       "CHOOSE_PAYMENT_METHOD": "支払い方法を選択する",
       "CHOOSE_WALLET": "お財布を選択する",
-      "SEND_WISH": "WISHトークンを送信する",
-      "SEND_SWAP": "SWAPトークンを送信する",
-      "SEND_ETH": "あなたのETHを送信する",
-      "SEND_BTC": "あなたのBTCを送信する",
-      "SEND_BNB": "Send your BNB to:",
-      "SEND_BWISH": "Send WISH-1EF to:",
+      "SEND_USDC": "USDCトークンを送信する",
+      "SEND_DUCX": "あなたのDUCXを送信する",
       "ENTER_AMOUNT": "金額を入力します：",
       "BTC_ATTENTION": {
         "RED_TEXT": "注意！",
@@ -434,7 +431,7 @@
           "LIST_ITEM_1": "お財布を開きます",
           "LIST_ITEM_2": "お財布にイーサ＆トークンタブを送る選択します",
           "LIST_ITEM_3": "次の受信者のアドレスを挿入します",
-          "LIST_ITEM_4": "送信する金額を入力し、ETHまたはWISHを選択します",
+          "LIST_ITEM_4": "送信する金額を入力し、DUCXまたはWISHを選択します",
           "LIST_ITEM_5": "ガスの上限30000を指定します",
           "LIST_ITEM_6": "トランザクションの生成をクリックします",
           "LIST_ITEM_7": "「完了」ボタンを押して、支払いを確認します"
@@ -460,7 +457,7 @@
     "AIRDROP": {
       "DISCLAIMER": {
         "ITEM_1": "アドレスとトークンの量を追加するには、テーブルを* .csv形式でアップロードする必要があります",
-        "ITEM_2": "すべての行には、Ethereum（列A）に1つのアドレスと、配布するトークンの量（列B）が含まれている必要があります。",
+        "ITEM_2": "すべての行には、DucatusX（列A）に1つのアドレスと、配布するトークンの量（列B）が含まれている必要があります。",
         "ITEM_TEXT": "トークンフィールドの量の形式には2種類あります。例えばトークンに18小数点があり、26.5トークンを誰かに送信したいとします。「小数点なし」を選択した場合は、B列に26.5を入力する必要があります。「小数点付き」 - 26500000000000000000（26.5 * 10 ^ 18）を入力する必要があります。"
       },
       "FILE_ERRORS": {
@@ -486,7 +483,7 @@
     "WHITELIST": {
       "DISCLAIMER": {
         "ITEM_1": "ホワイトリストに登録されたアドレスを追加するために *.csv 形式でテーブルをアップロードする必要があります",
-        "ITEM_2": "すべての行は1つのアドレスを Ethereum 形式で含んでいなければなりません",
+        "ITEM_2": "すべての行は1つのアドレスを DucatusX 形式で含んでいなければなりません",
         "ITEM_3": "最初の100個のアドレスのみが処理されます",
         "ITEM_4": "必要なだけアドレスを追加できますが、一度に100を超えないようにしてください。<br/>表の例："
       },
@@ -616,7 +613,7 @@
         "DESCRIPTION": "To unfreeze the tokens in your wallet, please follow the instructions.",
         "LIST": {
           "ITEM_1": "Open your wallet (Parity, <a href=\"{{depositUrl}}\" target=\"_blank\">MyEtherWallet</a>)",
-          "ITEM_2": "Choose Send Ether & Tokens tab in your wallet",
+          "ITEM_2": "Choose Send DucatusX & Tokens tab in your wallet",
           "ITEM_3": "Enter token contract address:",
           "ITEM_4": "Specify Gas limit 100000",
           "ITEM_5": "Input Data:",
@@ -629,7 +626,7 @@
         "DESCRIPTION": "In order for investors to receive funds back, provide them with the following instruction.",
         "LIST": {
           "ITEM_1": "Open your wallet (Parity, <a href=\"{{depositUrl}}\" target=\"_blank\">MyEtherWallet</a>)",
-          "ITEM_2": "Choose Send Ether & Tokens tab in your wallet",
+          "ITEM_2": "Choose Send DucatusX & Tokens tab in your wallet",
           "ITEM_3": "Enter token contract address:",
           "ITEM_4": "Specify Gas limit 100000",
           "ITEM_5": "Input Data:",
@@ -638,10 +635,10 @@
         }
       },
       "ANY_TRANSACTION": {
-        "PART_1": "管理アドレスからトランザクション ({{amount||'0'}} ETH) を送信する",
+        "PART_1": "管理アドレスからトランザクション ({{amount||'0'}} DUCX) を送信する",
         "PART_2": "契約アドレスに",
         "PART_3": "データ フィールド付き",
-        "PART_GUEST": "Send transaction ({{amount||'0'}} ETH) to contract address",
+        "PART_GUEST": "Send transaction ({{amount||'0'}} DUCX) to contract address",
         "GAS_LIMIT": "Gas limit"
       },
       "ACTIVATE": {
@@ -668,7 +665,7 @@
           "ITEM_1": "お財布を開きます　（パリティ, <a href=\"{{depositUrl}}\" target=\"_blank\">MyEtherWallet</a>)",
           "ITEM_2": "お財布にイーサ＆トークンタブを送る選択してください",
           "ITEM_3": "以下の受信者のアドレスを挿入します：",
-          "ITEM_4": "あなたは（”送信量”のフィールド）送信したいのETHの量を指定します",
+          "ITEM_4": "あなたは（”送信量”のフィールド）送信したいのDUCXの量を指定します",
           "ITEM_5": "ガスの上限30000を指定します",
           "ITEM_6": "トランザクションの生成]をクリックします",
           "ITEM_7": "「{{'BUTTONS.DONE'|translate}}」ボタンを押して、支払いを確認します"
@@ -734,7 +731,7 @@
       },
       "SEND_FUNDS": {
         "TITLE": "資金を送る",
-        "DESCRIPTION": "For sending ({{amount}} ETH) to Destination address ({{address}}) please make the following steps:"
+        "DESCRIPTION": "For sending ({{amount}} DUCX) to Destination address ({{address}}) please make the following steps:"
       },
       "GET_TOKENS": {
         "TITLE": "トークンを取得する",
@@ -898,13 +895,13 @@
         "FIELDS": {
           "MANAGEMENT_ADDR": {
             "LABEL": "管理アドレス",
-            "PLACEHOLDER": "あなたのETHの財布アドレスを入力してください",
+            "PLACEHOLDER": "あなたのDUCXの財布アドレスを入力してください",
             "DESCRIPTION": "このアドレスの所有者が契約を管理できるようになります（それは一つだけです）"
           },
           "SEND_TO_WALLET": {
             "LABEL": "財布に送る",
             "PLACEHOLDER": "受信者の財布のアドレスを入力します。",
-            "DESCRIPTION": "受信者のETHアドレスを入力します。 このアドレスは転送を取得します。"
+            "DESCRIPTION": "受信者のDUCXアドレスを入力します。 このアドレスは転送を取得します。"
           },
           "NOTIFICATION_EMAIL": {
             "LABEL": "通知のためのメールアドレス",
@@ -914,7 +911,7 @@
           "DATE_OF_TRANSFER": {
             "LABEL": "転送日",
             "PLACEHOLDER": "",
-            "DESCRIPTION": "あなたのETHの財布アドレスを入力してください"
+            "DESCRIPTION": "あなたのDUCXの財布アドレスを入力してください"
           }
         }
       },
@@ -923,7 +920,7 @@
         "FIELDS": {
           "MANAGEMENT_ADDR": {
             "LABEL": "管理アドレス：",
-            "PLACEHOLDER": "ETHウォレットのアドレスを入力してください",
+            "PLACEHOLDER": "DUCXウォレットのアドレスを入力してください",
             "DESCRIPTION": "このアドレスの所有者が契約を管理できるようになります（それは一つだけです）"
           },
           "TOKEN_ADDRESS_ON_OFF": {
@@ -940,7 +937,7 @@
           },
           "SOFT_CAP": {
             "LABEL": "プール容量（最小）",
-            "DESCRIPTION": "投資のために必要なETH最小容量を定義します。最小に達していない場合、寄稿者はETHを取り戻します。 あなたは0に（最低なし）設定することができます"
+            "DESCRIPTION": "投資のために必要なDUCX最小容量を定義します。最小に達していない場合、寄稿者はDUCXを取り戻します。 あなたは0に（最低なし）設定することができます"
           },
           "START_DATE": {
             "LABEL": "開始日",
@@ -960,7 +957,7 @@
           },
           "MIN_MAX_INVESTMENTS": {
             "LABEL": "投資の最小/最大限度",
-            "DESCRIPTION": "（{{currency||'ETH'}}で）最小/最大受け入れ貢献を指定することができます。 例えば、0.05 {{currency||'ETH'}}から3000 {{currency||'ETH'}}のみの寄付を受け入れます。"
+            "DESCRIPTION": "（{{currency||'DUCX'}}で）最小/最大受け入れ貢献を指定することができます。 例えば、0.05 {{currency||'DUCX'}}から3000 {{currency||'DUCX'}}のみの寄付を受け入れます。"
           },
           "MIN_INVESTMENTS": {
             "LABEL": "最小",
@@ -976,7 +973,7 @@
           },
           "INVESTMENT_ADDRESS": {
             "LABEL": "目的地のアドレス：",
-            "DESCRIPTION": "ETHアドレスはプールからすべての資金を送信するためです。 契約アドレスにすることもできます。提出前にダブルチェックをしてください。"
+            "DESCRIPTION": "DUCXアドレスはプールからすべての資金を送信するためです。 契約アドレスにすることもできます。提出前にダブルチェックをしてください。"
           },
           "BONUS": {
             "LABEL": "プールの所有者のための個人のボーナス（トークンで）：",
@@ -1012,7 +1009,7 @@
         "FIELDS": {
           "MANAGEMENT_ADDR": {
             "LABEL": "管理アドレス",
-            "PLACEHOLDER": "あなたのETHの財布アドレスを入力してください",
+            "PLACEHOLDER": "あなたのDUCXの財布アドレスを入力してください",
             "DESCRIPTION": "このアドレスの所有者が契約を管理できるようになります（それは一つだけです）"
           },
           "RESERVE_ADDRESS": {
@@ -1030,7 +1027,7 @@
             "DESCRIPTION": "暗号化通貨の転送に関するメッセージを送信するメールアドレスを入力します"
           },
           "CONDITIONS_TEXT": "財布の活動のための条件を入力します。",
-          "CONDITIONS_DESCRIPTION": "あなたのETHの財布アドレスを入力してください",
+          "CONDITIONS_DESCRIPTION": "あなたのDUCXの財布アドレスを入力してください",
           "WALLETS_ACTIVITY": {
             "LABEL": "財布の活動",
             "LIST": {
@@ -1054,7 +1051,7 @@
           "MANAGEMENT_ADDR": {
             "LABEL": "管理アドレス",
             "PLACEHOLDER": "お財布のアドレス {{networkName}} を入力する",
-            "ETH_DESCRIPTION": "ETHアドレス（交換アドレスではない）。 このアドレスはウィル契約を管理します。 提出する前にアドレスをダブルチェックしてください",
+            "ETH_DESCRIPTION": "DUCXアドレス（交換アドレスではない）。 このアドレスはウィル契約を管理します。 提出する前にアドレスをダブルチェックしてください",
             "RSK_DESCRIPTION": "このアドレスは、ご契約を管理します。 あなたは<a href=\"https://jaxx.io/\" target=\"_blank\">Jaxx</a>財布でそれを作成することができます。 提出する前にアドレスをダブルチェックしてください。"
           },
           "YOUR_EMAIL": {
@@ -1065,7 +1062,7 @@
           "BENEFICIARY_ADDR": {
             "LABEL": "受取人アドレス",
             "PLACEHOLDER": "アドレス {{networkName}} を入力する",
-            "ETH_DESCRIPTION": "受取人のETHアドレスを入力する。契約実行後、資金はそのアドレスに送付されます。",
+            "ETH_DESCRIPTION": "受取人のDUCXアドレスを入力する。契約実行後、資金はそのアドレスに送付されます。",
             "RSK_DESCRIPTION": "受取人のRSKアドレスを入力する。契約実行後、資金はそのアドレスに送付されます。相続人は、あまりにも<a href=\"https://jaxx.io/\" target=\"_blank\">JAXX</a>でそれを作成することができます"
           },
           "SHARE": {
@@ -1146,12 +1143,12 @@
         "FIELDS": {
           "TOKEN_NAME": {
             "LABEL": "トークン名",
-            "DESCRIPTION": "スペースを入れずにプロジェクトの名前を入力します。通常は5〜25記号です。 大文字と小文字を使用できます"
+            "DESCRIPTION": "スペースを入れずにプロジェクトの名前を入力します。通常は8記号です。 大文字と小文字を使用できます"
           },
           "TOKEN_SYMBOL": {
             "LABEL": "トークン記号：",
-            "DESCRIPTION": "通常はETH、BTC、NEO、WISHなどのような3〜4文字のレターです。提出前にユニークであることを確認してください (<a href=\"https://etherscan.com/tokens\" target=\"_blank\">https://etherscan.com/tokens</a>)",
-            "DESCRIPTION_TRON": "通常はETH、BTC、NEO、WISHなどのような3〜4文字のレターです。",
+            "DESCRIPTION": "通常はDUCX、BTC、NEO、WISHなどのような3〜4文字のレターです。提出前にユニークであることを確認してください",
+            "DESCRIPTION_TRON": "通常はDUCX、BTC、NEO、WISHなどのような3〜4文字のレターです。",
             "DESCRIPTION_NEO": "この記号は短い（3〜8文字が推奨されます）、空白文字や改行はなく、大文字のラテンアルファベットに限定する必要があります (すなわち、英語で使用される26文字）"
           },
           "DECIMALS": {
@@ -1160,8 +1157,8 @@
           },
           "TOKEN_TYPE": {
             "LABEL": "トークンのタイプを選択します。",
-            "DESCRIPTION_1": "ERC-20をお勧めします。 ほとんどの取引所で受け入れます。",
-            "DESCRIPTION_2": "ERC-223はERC-20とほとんど同じです。 トークンの転送中に余分な安全性を提供します。"
+            "DESCRIPTION_1": "DRC-20をお勧めします。 ほとんどの取引所で受け入れます。",
+            "DESCRIPTION_2": "DRC-223はDRC-20とほとんど同じです。 トークンの転送中に余分な安全性を提供します。"
           },
           "TOKEN_OWNER": {
             "LABEL": "トークン所有者",
@@ -1194,7 +1191,7 @@
           },
           "AUTHIO": {
             "LABEL": "Branded report",
-            "DESCRIPTION": "Branded report is needed for exchanges and gives the estimation of the security of your token contract. Every contract is verified independently. Please <a href=\"https://www.oceanico.io/audit-reports/Sample-of-audit-report.pdf\" target=\"_blank\">check the example</a>. <br/><b>Branded report cost is 3 ETH</b>.",
+            "DESCRIPTION": "Branded report is needed for exchanges and gives the estimation of the security of your token contract. Every contract is verified independently. Please <a href=\"https://www.oceanico.io/audit-reports/Sample-of-audit-report.pdf\" target=\"_blank\">check the example</a>. <br/><b>Branded report cost is 3 DUCX</b>.",
             "SECOND_DESCRIPTION": "<a href=\"https://www.oceanico.io\" target=\"_blank\">This service</a> is run by independent US based company specialised in&nbsp;security analyze.",
             "EMAIL_LABEL": "To request a branded report please enter your email",
             "EMAIL_DESCRIPTION": "At this address you will receive an branded report of your contract. Please be careful and check it again.",
@@ -1240,7 +1237,7 @@
           },
           "STORAGE_ADDRESS": {
             "LABEL": "投資ストレージアドレス",
-            "DESCRIPTION": "ETHアドレス（エクスチェンジアドレスではない）。ソフトキャップに達した場合、すべての投稿は終了日後にその住所に送信されます。入力する前に住所を再確認してください"
+            "DESCRIPTION": "DUCXアドレス（エクスチェンジアドレスではない）。ソフトキャップに達した場合、すべての投稿は終了日後にその住所に送信されます。入力する前に住所を再確認してください"
           },
           "TOKEN_RATE": {
             "LABEL": "トークンレート",
@@ -1281,7 +1278,7 @@
           },
           "MIN_MAX_INVESTMENTS": {
             "LABEL": "最小＆最大の投資制限",
-            "DESCRIPTION": "受け入れ可能な最小/最大受領額を指定することができます（{{currency||'ETH'}}）。 たとえば、0.05 {{currency||'ETH'}}から3000 {{currency||'ETH'}}のみの寄付を受け入れます"
+            "DESCRIPTION": "受け入れ可能な最小/最大受領額を指定することができます（{{currency||'DUCX'}}）。 たとえば、0.05 {{currency||'DUCX'}}から3000 {{currency||'DUCX'}}のみの寄付を受け入れます"
           },
           "MIN_INVESTMENTS": {
             "LABEL": "ミニマム",
@@ -1321,7 +1318,7 @@
             "LABEL": "最大金額",
             "DESCRIPTION": "特定のボーナスを得るための最大金額　{{last ? '（制限がない場合は空にしておくことができます）': ''}}"
           },
-          "AMOUNT_BONUS_DESCRIPTION": "あなたは寄付金額に応じたボーナスを定義することができます。たとえば、10+ ETHの貢献のための余分な5％のトークンを与えます"
+          "AMOUNT_BONUS_DESCRIPTION": "あなたは寄付金額に応じたボーナスを定義することができます。たとえば、10+ DUCXの貢献のための余分な5％のトークンを与えます"
         }
       },
       "AIRDROP": {
@@ -1330,7 +1327,7 @@
         "FIELDS": {
           "MANAGEMENT_ADDR": {
             "LABEL": "管理アドレス",
-            "PLACEHOLDER": "あなたのETHの財布アドレスを入力してください",
+            "PLACEHOLDER": "あなたのDUCXの財布アドレスを入力してください",
             "DESCRIPTION": "このアドレスの所有者が契約を管理できるようになります（それは一つだけです）"
           },
           "TOKEN_ADDR": {
@@ -1526,7 +1523,7 @@
           "AUDITED_DATE": "The planned date of the branded report: {{auditedDate|date:'yyyy-MM-dd'}}",
           "SUPPORT_DESCRIPTION": "If you have questions? you can send them to us at <a href=\"mailto:support@mywish.io\">support@mywish.io</a> or livechat.<br/> We will contact you as soon as possible.",
           "FORM_TEXTS": {
-            "PART_1": "Oceanico is a full service smart contract security firm focused of mitigating technical debt and security risk for projects building decentralised applications on Ethereum. <a href=\"https://www.oceanico.io\" target=\"_blank\">Learn more</a>",
+            "PART_1": "Oceanico is a full service smart contract security firm focused of mitigating technical debt and security risk for projects building decentralised applications on DucatusX. <a href=\"https://www.oceanico.io\" target=\"_blank\">Learn more</a>",
             "PART_2": "What you get:<br/> 1. A beautifully designed branded report with your company's branding (name, logo, URL)<br/> 2. A credible attestation that your token contracts have passed review and testing by security experts<br/> <a href=\"https://www.oceanico.io/audit-reports/Sample-of-audit-report.pdf\" target=\"_blank\">Check an example</a>"
           },
           "FORM_NOTICE": "The branded report will be delivered in 3 working days by email after the date of payment.",
@@ -1585,7 +1582,7 @@
           "PROGRESS": "進捗が上がった",
           "MIN": "最小",
           "MAX": "最大",
-          "TOTAL": "総獲得額：{{amount}} {{currency || 'ETH'}}",
+          "TOTAL": "総獲得額：{{amount}} {{currency || 'DUCX'}}",
           "DAY": "日：＋{{percent}}%)"
         }
       },

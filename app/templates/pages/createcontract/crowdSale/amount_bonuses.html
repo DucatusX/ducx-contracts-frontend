@@ -34,7 +34,7 @@
                             max: bigNumber(bonus.max_amount).minus('1')
                        }"
                        class="form-control-input"/>
-                <div class="input-after">ETH</div>
+                <div class="input-after">DUCX</div>
             </div>
         </div>
         <div class="grid-cell grid-cell-3-5 grid-cell-ps-4-5 grid-cell-vs-1 form-control-description">
@@ -62,7 +62,7 @@
                             max: bigNumber(request.hard_cap).div(request.rate).floor()
                         }"
                        class="form-control-input"/>
-                <div class="input-after">ETH</div>
+                <div class="input-after">DUCX</div>
             </div>
         </div>
         <div class="grid-cell grid-cell-3-5 grid-cell-ps-4-5 grid-cell-vs-1 form-control-description">
@@ -89,7 +89,7 @@
             <button class="btn btn-transparent with-icon mobile-width-100"
                     ng-disabled="!amountBonusForm.$valid"
                     type="button" ng-click="addAmountBonus();">
-                <i class="icon-create-contract"></i>
+                <i class="icon-plus"></i>
                 <span ng-if="!bonuses.length" translate="CONTRACTS.FORMS.CROWD_SALE.BUTTONS.ADD_NEW_AMOUNT_BONUS"></span>
                 <span ng-if="bonuses.length" translate="CONTRACTS.FORMS.CROWD_SALE.BUTTONS.ADD_OTHER_AMOUNT_BONUS"></span>
             </button>

@@ -9,13 +9,13 @@
 
                 <input id="out-wallet-key-{{$index}}" type="text"
                        placeholder="{{'CONTRACTS.FORMS.TOKEN.FIELDS.RECIPIENT_ADDRESS.PLACEHOLDER'|translate}}"
-                       ng-checksum-address-validator="{'network': blockchain}"
+                       ng-checksum-address-validator="{'network': 'DUCX'}"
                        ng-model="recipient.address"
                        ng-change="!recipient.name ? checkTokensAmount() : false"
                        required
                        class="form-control-input"/>
                 <span class="field-error form-field_error-check-sum"
-                      ng-if="(blockchain === 'ETH') && (recipient.address ? !web3Utils.checkAddressChecksum(recipient.address) : false)"
+                      ng-if="recipient.address ? !web3Utils.checkAddressChecksum(recipient.address) : false"
                       style="display: block" translate="FIELDS_ERRORS.ADDRESS_NOT_CHECKSUMMED"></span>
             </div>
         </div>
@@ -45,8 +45,8 @@
                        ng-model="recipient.amount"/>
             </div>
         </div>
-        <div class="clearfix show-ps" ng-if="blockchain !== 'NEO'"><br/></div>
-        <div class="grid-cell grid-cell-1-2 grid-cell-ps-4-5 grid-cell-ls-1" ng-show="blockchain !== 'NEO'">
+        <div class="clearfix show-ps"><br/></div>
+        <div class="grid-cell grid-cell-1-2 grid-cell-ps-4-5 grid-cell-ls-1">
             <label class="form-control-label">
                 <i class="icon-snowflake form-control-label-icon floated"></i>
                 <span class="after-floated">{{'CONTRACTS.FORMS.TOKEN.FIELDS.FROZEN_UNTIL.LABEL'|translate}}&nbsp;&nbsp;&nbsp;&nbsp;<span class="form-control-label-grey-text">UTC{{currentTimezone}}</span></span>
@@ -94,7 +94,7 @@
        ng-click="removeRecipient(recipient); checkTokensAmount();"
        ng-if="token_holders.length"></i>
 </div>
-<div class="shadow-block__content" ng-if="(token_holders.length < 5) || (blockchain === 'NEO')">
+<div class="shadow-block__content" ng-if="token_holders.length < 5">
     <div class="grid-row">
         <div class="grid-cell grid-cell-1-2 grid-cell-ls-1 float-right form-control-description">
             <span class="form-control-description__text"
@@ -103,7 +103,7 @@
         <div class="grid-cell grid-cell-1-2 grid-cell-ls-1 form-control-description">
             <button class="btn btn-transparent with-icon mobile-width-100" type="button"
                     ng-click="addRecipient(); checkTokensAmount();">
-                <i class="icon-create-contract"></i>
+                <i class="icon-plus"></i>
                 <span translate="CONTRACTS.FORMS.CROWD_SALE.BUTTONS.ADD_EXTRA_ADDRESS"></span>
             </button>
         </div>

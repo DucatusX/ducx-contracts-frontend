@@ -14,11 +14,8 @@
   bottom: 0;
   width: 25.5em;
   transition: margin-left 0.2s;
-  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(255, 255, 255, 0.2);
-  background-color: $main-color;
-  @if ($env =='tron') {
-    background: linear-gradient(to right, #c03634, #842523);
-  }
+  //text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(255, 255, 255, 0.2);
+  background-color: $menu-color;
 }
 .main-menu-wrapper {
   height: 100%;
@@ -30,8 +27,8 @@
 }
 .main-menu-logo {
   display: block;
-  margin: 1.35em auto 0 2em;
-  width: 16.5em;
+  margin: 1em auto 0 2em;
+  width: 18.5em;
   &:after, &:before {
     display: table;
     content: '';
@@ -101,11 +98,7 @@
         display: block;
         width: 1.8em;
         height: 1.8em;
-        background-color: $main-color;
-
-        @if ($env =='tron') {
-          background: #842523;
-        }
+        background-color: $menu-color;
         right: 0;
         z-index: 2;
       }

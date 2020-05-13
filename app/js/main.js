@@ -16,17 +16,6 @@ module.controller('mainMenuController', function($scope, MENU_CONSTANTS) {
 }).controller('baseController', function($scope, $rootScope, $translate, $timeout, $cookies, authService) {
     $rootScope.showedMenu = false;
 
-    $timeout(function() {
-        $rootScope.eoslynx = !!$cookies.get('eoslynx');
-        if (window['lynxMobile']) {
-            $rootScope.eoslynxIsMobile = true;
-        } else {
-            window.addEventListener("lynxMobileLoaded", function() {
-                $rootScope.eoslynxIsMobile = true;
-            });
-        }
-    });
-
     $scope.notCookiesAccept = !$cookies.get('cookies-accept');
     $scope.closeCookiesInfo = function(withoutCookie) {
         $scope.notCookiesAccept = false;
@@ -73,7 +62,7 @@ module.controller('mainMenuController', function($scope, MENU_CONSTANTS) {
     var bodyClickHandler = function() {
         clickTimer ? $timeout.cancel(clickTimer) : false;
         clickBodyCounter++;
-        if (clickBodyCounter === 10) {
+        if (clickBodyCounter === 25) {
             $rootScope.visibleGirl = true;
             $rootScope.$apply();
             angular.element('body').off('click', bodyClickHandler);
@@ -91,39 +80,13 @@ module.controller('mainMenuController', function($scope, MENU_CONSTANTS) {
     $rootScope.testing = $location.$$hash === 'forTest';
 
     $rootScope.testAddresses = {
-        "ETH": "0xD0593B233Be4411A236F22b42087345E1137170b",
-        "EOS": "mywishtestac",
-        "TRON": "TRBeBGSyKrVMts1ZQz45JRu9mxCwEhgPSg",
-        "NEO": "AYhjNHgTs9sG8B2TbnRT5HxwTA2HAuhthq",
-        "RSK": "0xa441b5438885c9b5879e7dfa885b5d1b97216d69"
+        "DUCX": "0xD0593B233Be4411A236F22b42087345E1137170b"
     };
 
 
     $rootScope.sitemode = ENV_VARS.mode;
     $rootScope.getNetworkPath = function(network) {
-        network *= 1;
-        switch (network) {
-            case 1:
-            case 2:
-                return 'eth';
-                break;
-            case 3:
-            case 4:
-                return 'rsk';
-                break;
-            case 5:
-            case 6:
-                return 'neo';
-                break;
-            case 10:
-            case 11:
-                return 'eos';
-                break;
-            case 14:
-            case 15:
-                return 'tron';
-                break;
-        }
+        return 'duc';
     };
 
     $rootScope.max = Math.max;
@@ -131,7 +94,6 @@ module.controller('mainMenuController', function($scope, MENU_CONSTANTS) {
     $rootScope.pow = Math.pow;
 
     $rootScope.web3Utils = window.Web3 ? window.Web3.utils : false;
-
 
     var loginWatcherInProgress;
 
@@ -166,20 +128,8 @@ module.controller('mainMenuController', function($scope, MENU_CONSTANTS) {
             $rootScope.setLanguage(lng);
         }
 
-
-
-        switch (ENV_VARS.mode) {
-            case 'eos':
-                profile.visibleBalance = (new BigNumber(profile.balance)).div(Math.pow(10, 4)).toFormat(2);
-                break;
-            case 'tron':
-                profile.visibleBalance = (new BigNumber(profile.balance)).div(Math.pow(10, 6)).toFormat(2);
-                break;
-            default:
-                profile.visibleBalance = (new BigNumber(profile.balance)).div(Math.pow(10, 18)).toFormat(2);
-                profile.visibleBalanceUSDT = (new BigNumber(profile.usdt_balance.split('.')[0])).div(Math.pow(10, 6)).toFormat(2);
-                break;
-        }
+        profile.visibleBalance = (new BigNumber(profile.balance)).div(Math.pow(10, 6)).toFormat(2);
+        // profile.visibleBalanceUSDT = (new BigNumber(profile.usdt_balance.split('.')[0])).div(Math.pow(10, 6)).toFormat(2);
 
         profile.balanceInRefresh = $rootScope.currentUser ? $rootScope.currentUser.balanceInRefresh : false;
         $rootScope.currentUser = profile;
@@ -203,12 +153,16 @@ module.controller('mainMenuController', function($scope, MENU_CONSTANTS) {
     };
 
     var getCurrentUser = function() {
+        var oldUser = $rootScope.currentUser;
         authService.profile().then(function(data) {
             if (data) {
                 dateRange = (new Date(data.headers('date'))).getTime() - (new Date()).getTime();
                 $rootScope.setCurrentUser(data.data);
                 iniApplication();
                 $rootScope.currentUserDefer.resolve(data);
+                if (oldUser.is_ghost) {
+                    $rootScope.$broadcast('$userUpdated');
+                }
             }
         }, function(response) {
             var errorCode = response.status;
@@ -220,6 +174,9 @@ module.controller('mainMenuController', function($scope, MENU_CONSTANTS) {
                         data: APP_CONSTANTS.EMPTY_PROFILE
                     });
                     break;
+            }
+            if (!oldUser.is_ghost) {
+                $rootScope.$broadcast('$userUpdated');
             }
         });
         return $rootScope.currentUserDefer.promise;
@@ -258,7 +215,7 @@ module.controller('mainMenuController', function($scope, MENU_CONSTANTS) {
     });
 
     var progressTimer;
-    $rootScope.$on("$stateChangeSuccess", function(event, newLocation, newStateParams, oldLocation, oldStateParams) {
+    $rootScope.$on("$stateChangeSuccess", function(event, newLocation) {
         $rootScope.closeCommonPopup();
         $rootScope.showedMenu = false;
 
@@ -308,7 +265,7 @@ module.controller('mainMenuController', function($scope, MENU_CONSTANTS) {
             $rootScope.finishGlobalProgress = false;
         }
     };
-    $rootScope.$on("$stateChangeStart", function(event, newLocation, newStateParams, oldLocation, oldStateParams) {
+    $rootScope.$on("$stateChangeStart", function(event, newLocation, newStateParams, oldLocation) {
         getCurrentUser(newLocation.name === 'anonymous');
 
         if (newLocation.name === 'anonymous') {

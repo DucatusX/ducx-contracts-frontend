@@ -149,7 +149,7 @@ module.directive('ngTimesBonusChart', function($rootScope) {
 
             $scope.$watch('ngTimesBonusChart.data', function(data) {
                 if (!data) return;
-                checkChartData();
+                setTimeout(checkChartData);
             });
         }
     }

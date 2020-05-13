@@ -4,6 +4,7 @@
             <div class="grid-cell grid-cell-vs-1-2 float-right"
                  ng-if="(contract.stateValue == 1) || (contract.stateValue == 2)">
                 <button class="btn btn-transparent btn-transparent-red with-icon mobile-width-100 with-icon initial-padding text-center"
+                        ng-if="(contract.stateValue == 1) || (contract.stateValue == 2)"
                         ng-pop-up="{
                             template: '/templates/popups/confirmations/delete-contract.html',
                             newPopupContent: true,
@@ -15,11 +16,13 @@
                         }">
                     <i class="icon-trash"></i>
                     <span translate="CONTRACTS_BUTTONS.DELETE"></span>
-                </button><br/><br/>
+                </button>
+
+                <br/><br/>
             </div>
 
             <!-- Launch button -->
-            <div class="grid-cell grid-cell-vs-1-2" ng-if="(contract.stateValue == 1) || (contract.stateValue == 2)">
+            <div class="grid-cell grid-cell-vs-1-2" ng-if="(contract.stateValue == 1) || (contract.stateValue == 2) || (contract.stateValue == 13 && currentUser.is_ducx_admin)">
                 <button class="btn btn-transparent mobile-width-100 text-center"
                         ng-click="payContract(contract)">
                     <i class="icon-rocket-ship"></i>
@@ -86,7 +89,7 @@
             </div>
 
             <!-- Unfreezing token contract form button -->
-            <div class="grid-cell grid-cell-vs-1-2"
+            <!-- div class="grid-cell grid-cell-vs-1-2"
                  ng-if="tokensFreezed">
                 <button ng-pop-up="{
                             template: '/templates/popups/instructions/eth/unfreezing-instruction.html',
@@ -103,7 +106,7 @@
                         class="btn btn-transparent mobile-width-100 text-center">
                     <span translate="CONTRACTS_BUTTONS.UNFREEZING"></span>
                 </button><br/><br/>
-            </div>
+            </div -->
 
 
             <!-- Finalize token contract form button -->

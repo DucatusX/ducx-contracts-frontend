@@ -43,13 +43,7 @@ main.main-content-holder {
 
 .pre-release-information {
   display: block;
-  border-bottom: 1px solid #a9c7ff;
-  .eosish-mode & {
-    border-bottom-color: #849bb5;
-  }
-  .tronish-mode & {
-    border-bottom-color: rgba(49, 11, 8, 0.75);
-  }
+  border-bottom: 1px solid #DACCB9;
   left: 25.5em;
   position: fixed;
   top: 0;

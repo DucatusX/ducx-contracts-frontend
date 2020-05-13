@@ -41,13 +41,16 @@
                         }"
                         ng-mousedown="refreshContract(contract)">
                     <img class="btn-icon refresh-icon" src="/static/images/refresher.svg" ng-if="sitemode === 'default'">
-                    <img class="btn-icon refresh-icon" src="/static/images/refresher-grey.svg" ng-if="sitemode === 'eos'">
-                    <img class="btn-icon refresh-icon" src="/static/images/refresher-red.svg" ng-if="sitemode === 'tron'">
                 </button>
             </div>
 
             <div class="contract-block__buttons"
+                 ng-if="!currentUser.is_ducx_admin || (currentUser.id === contract.user)"
                  ng-include="'/templates/pages/contracts/list/' + getNetworkPath(contract.network) + '-buttons.html'"></div>
+
+            <div class="contract-block__buttons"
+                 ng-if="currentUser.is_ducx_admin && (currentUser.id !== contract.user)"
+                 ng-include="'/templates/pages/contracts/list/admin-' + getNetworkPath(contract.network) + '-buttons.html'"></div>
         </div>
     </div>
 </div>

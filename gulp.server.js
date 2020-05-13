@@ -2,7 +2,7 @@ let gulp = require('gulp');
 let path = require('path');
 let browserSync = require('browser-sync');
 let url = require('url');
-let argv = require('yargs').argv;
+
 let proxyMiddleware = require('http-proxy-middleware');
 
 var allowedExtensions = ['html', 'js', 'map', 'css', 'png', 'svg', 'jpg', 'jpeg', 'gif', 'webp', 'woff', 'ttf', 'svg', 'otf', 'ico', 'eot', 'swf', 'mp3'];
@@ -11,26 +11,7 @@ var extensionsPattern = allowedExtensions.map(function (extension) {
     return '\\.' + extension;
 }).join('|');
 
-var indexTemplates = ['auth'].join('|');
-
-let modes = ['eos', 'tron', 'default'];
-let currentBlockChainMode = modes.filter((mode) => {
-    return argv[mode];
-})[0] || 'default';
-
-let proxyUrl;
-
-switch (currentBlockChainMode) {
-    case 'eos':
-        proxyUrl = url.parse("http://deveos.mywish.io");
-        break;
-    case 'tron':
-        proxyUrl = url.parse("http://trondev.mywish.io");
-        break;
-    default:
-        proxyUrl = url.parse("http://dev.mywish.io");
-        break;
-}
+let proxyUrl = url.parse("http://trondev.mywish.io");
 
 var devServerApi = {
     path: [

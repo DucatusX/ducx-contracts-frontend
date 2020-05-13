@@ -1,8 +1,11 @@
-$blocks-background: #F4F4F4;
-$dark-block-background: #F0F0F0;
-$main-field-color: #206EFF;
-$main-color: #206EFF!default;
-$menu-hover-color: #4d97f4!default;
+$blocks-background: #f6f1ea;
+$dark-block-background: #F1ECE5;
+$main-field-color: #842734;
+$main-hover-color: #a73142;
+$main-color: #842734!default;
+
+$menu-color: #DACCB9 !default;
+$menu-hover-color: #aca091 !default;
 
 $white-color: #fff;
 $black-color: #000;
@@ -10,22 +13,6 @@ $black-color: #000;
 $info-color: #f5a623;
 $cost-value-color: #EFEFEF;
 $dark-grey-color: #808080;
-
-@if($env == 'eos') {
-  $main-color: #556577;
-  $menu-hover-color: #8293a6;
-  $black-color: #2b3b4b;
-  $blocks-background: #F3F5F7;
-}
-
-@if($env == 'tron') {
-  $main-color: #c03634;
-  $menu-hover-color: #ce3a38;
-  $black-color: #1d0705;
-  $blocks-background: #fffcfc;
-}
-
-
 
 
 html {
@@ -241,7 +228,6 @@ nav, main, footer, header {
   padding: 1em 0 2em;
   a, span {
     font-size: 1.5em;
-    color: inherit;
     vertical-align: middle;
   }
   i {

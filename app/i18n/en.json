@@ -12,6 +12,8 @@
   "MONTHS": "months",
   "YEARS":"years",
   "DAYS": "days",
+  "FEEDBACK_EMAIL": "Contact email",
+  "FEEDBACK_EMAIL_DESCRIPTION": "Will be used for feedback and notifications",
   "MAIN_MENU": {
     "UNKNOWN_USER": "Unknown user",
     "UNKNOWN": "Unknown",
@@ -38,6 +40,7 @@
     "CREATED": "Created",
     "WAITING_FOR_PAYMENT": "Waiting for payment",
     "WAITING_FOR_DEPLOYMENT": "Waiting for deployment",
+    "WAITING_FOR_CONFIRMATION": "Waiting for confirmation",
     "ACTIVE": "Active",
     "EXPIRED": "Expired",
     "CANCELLED": "Cancelled",
@@ -52,8 +55,8 @@
     "CREATING": "Creating"
   },
   "CONTRACTS_NETWORKS": {
-    "NETWORK_1": "Main Ethereum Network",
-    "NETWORK_2": "Ropsten Test Net",
+    "NETWORK_26483": "Main DucatusX Network",
+    "NETWORK_26482": "Test DucatusX Network",
     "NETWORK_3": "RSK Network",
     "NETWORK_4": "RSK Testnet faucet",
     "NETWORK_5": "NEO MainNet",
@@ -61,7 +64,9 @@
     "NETWORK_10": "EOS MainNet",
     "NETWORK_11": "EOS TestNet",
     "NETWORK_14": "TRON MainNet",
-    "NETWORK_15": "TRON TestNet"
+    "NETWORK_15": "TRON TestNet",
+    "NETWORK_18": "Main DucatusX Network",
+    "NETWORK_19": "Test DucatusX Network"
   },
   "BUTTONS": {
     "ENABLE": "Enable",
@@ -149,12 +154,7 @@
     "ADDRESS_NOT_CHECKSUMMED": "Address is not checksummed"
   },
   "BLOCKCHAIN_NETWORKS": {
-    "ETH": "Ethereum",
-    "BTC": "Bitcoin",
-    "NEO": "NEO",
-    "EOS": "EOS",
-    "TRON": "TRON",
-    "WAVES": "WAVES"
+    "DUCX": "DucatusX"
   },
   "ALERTS": {
     "SCATTER_INSTALL": {
@@ -194,6 +194,9 @@
     },
     "CONTRACT_DELETE": {
       "TEXT": "Do you want to remove it?"
+    },
+    "CONTRACT_CANCEL": {
+      "TEXT": "Do you want to cancel it?"
     },
     "CONTRACT_PAY": {
       "TEXT": "Please confirm contract launch ({{price|separateNumber}} {{currency || 'WISH'}})"
@@ -300,7 +303,7 @@
       },
       "AIRDROP": {
         "TITLE": "Airdrop",
-        "DESCRIPTION": "Distribute any ERC-20/ERC-223 tokens among many addresses (for example, after Bounty program or Crowdsale)"
+        "DESCRIPTION": "Distribute any DRC-20/DRC-223 tokens among many addresses (for example, after Bounty program or Crowdsale)"
       },
       "EOS_AIRDROP": {
         "TITLE": "Airdrop",
@@ -308,11 +311,11 @@
       },
       "INVESTMENT_POOL": {
         "TITLE": "Investment pool",
-        "DESCRIPTION": "The contract for ETH accumulation before the investment. Create it and share the address with others."
+        "DESCRIPTION": "The contract for DUCX accumulation before the investment. Create it and share the address with others."
       },
       "LOST_KEY": {
         "TITLE": "Lost key",
-        "DESCRIPTION": "The smart contract has all the same features as the standard Ethereum wallet and, in addition, redirecting your funds to the backup wallet, if you will lose the access/private key."
+        "DESCRIPTION": "The smart contract has all the same features as the standard DucatusX wallet and, in addition, redirecting your funds to the backup wallet, if you will lose the access/private key."
       },
       "TRON_LOST_KEY": {
         "TITLE": "Lost key for Tokens",
@@ -320,7 +323,7 @@
       },
       "ETH_LOST_KEY": {
         "TITLE": "Lost key for Tokens",
-        "DESCRIPTION": "The Lost Key smart contract ensures your (ERC-20 standard) tokens and redirects them to backup wallets, if you lost the access/private key or in case of a long inactivity period of time (death, accidents, etc..)."
+        "DESCRIPTION": "The Lost Key smart contract ensures your (DRC-20 standard) tokens and redirects them to backup wallets, if you lost the access/private key or in case of a long inactivity period of time (death, accidents, etc..)."
       },
       "DEFERRED": {
         "TITLE": "Deferred payment",
@@ -344,7 +347,7 @@
           "LIST_ITEM_1": "Contracts/Accounts in Test Net are free for use (you can create & deploy it to test network)",
           "LIST_ITEM_2": "Please accept low speed for deployment (up to 3 hours)",
           "LIST_ITEM_3": "Contracts in Test/ Main network have identical code",
-          "LIST_ITEM_4_OLD": "Please use Test Net addresses (Ropsten for ETH) while working with contracts",
+          "LIST_ITEM_4_OLD": "Please use Test Net addresses (Ropsten for DUCX) while working with contracts",
           "LIST_ITEM_4": "Please use Test Net addresses while working with contracts"
         }
       },
@@ -415,12 +418,8 @@
       "CHOOSE_REPLENISH_METHOD": "Choose replenish method",
       "CHOOSE_PAYMENT_METHOD": "Select payment method:",
       "CHOOSE_WALLET": "Choose your wallet:",
-      "SEND_WISH": "Send WISH tokens to:",
-      "SEND_SWAP": "Send SWAP tokens to:",
-      "SEND_ETH": "Send your ETH to:",
-      "SEND_BTC": "Send your BTC to:",
-      "SEND_BNB": "Send your BNB to:",
-      "SEND_BWISH": "Send WISH-1EF to:",
+      "SEND_USDC": "Send USDC tokens to:",
+      "SEND_DUCX": "Send your DUCX to:",
       "ENTER_AMOUNT": "Enter Amount:",
       "BTC_ATTENTION": {
         "RED_TEXT": "Attention!",
@@ -433,9 +432,9 @@
         "TITLE": "How To Pay",
         "LIST": {
           "LIST_ITEM_1": "Open your wallet",
-          "LIST_ITEM_2": "Choose Send Ether & Tokens tab in your wallet",
+          "LIST_ITEM_2": "Choose Send DucatusX & Tokens tab in your wallet",
           "LIST_ITEM_3": "Insert the following recipient`s address:",
-          "LIST_ITEM_4": "Enter Amount to Send and choose ETH or WISH",
+          "LIST_ITEM_4": "Enter Amount to Send and choose DUCX or USDC",
           "LIST_ITEM_5": "Specify Gas limit 30000",
           "LIST_ITEM_6": "Click Generate Transaction",
           "LIST_ITEM_7": "Confirm the payment by pressing the button \"DONE\""
@@ -461,7 +460,7 @@
     "AIRDROP": {
       "DISCLAIMER": {
         "ITEM_1": "For adding addresses & amount of tokens you need to upload the table in *.csv format",
-        "ITEM_2": "Every row must contain one address in Ethereum (column A) and amount of tokens to distribute (column B)",
+        "ITEM_2": "Every row must contain one address in DucatusX (column A) and amount of tokens to distribute (column B)",
         "ITEM_TEXT": "There are 2 types of the format for amount of tokens field. For example, your token has 18 decimals and you want to send 26.5 tokens to somebody. If you choose “No Decimals” you need to put 26.5 to column B. “With Decimals” - 26500000000000000000 (26.5 * 10^18)."
       },
       "FILE_ERRORS": {
@@ -487,7 +486,7 @@
     "WHITELIST": {
       "DISCLAIMER": {
         "ITEM_1": "For adding whitelisted addresses you need to upload the table in *.csv format",
-        "ITEM_2": "Every row must contain one address in Ethereum format",
+        "ITEM_2": "Every row must contain one address in DucatusX format",
         "ITEM_3": "Only the first 100 addresses will be processed",
         "ITEM_4": "You can add as many addresses as you need, but not more than 100 at a time<br/>Table example:"
       },
@@ -617,7 +616,7 @@
         "DESCRIPTION": "To unfreeze the tokens in your wallet, please follow the instructions.",
         "LIST": {
           "ITEM_1": "Open your wallet (Parity, <a href=\"{{depositUrl}}\" target=\"_blank\">MyEtherWallet</a>)",
-          "ITEM_2": "Choose Send Ether & Tokens tab in your wallet",
+          "ITEM_2": "Choose Send DucatusX & Tokens tab in your wallet",
           "ITEM_3": "Enter token contract address:",
           "ITEM_4": "Specify Gas limit 100000",
           "ITEM_5": "Input Data:",
@@ -630,7 +629,7 @@
         "DESCRIPTION": "In order for investors to receive funds back, provide them with the following instruction.",
         "LIST": {
           "ITEM_1": "Open your wallet (Parity, <a href=\"{{depositUrl}}\" target=\"_blank\">MyEtherWallet</a>)",
-          "ITEM_2": "Choose Send Ether & Tokens tab in your wallet",
+          "ITEM_2": "Choose Send DucatusX & Tokens tab in your wallet",
           "ITEM_3": "Enter token contract address:",
           "ITEM_4": "Specify Gas limit 100000",
           "ITEM_5": "Input Data:",
@@ -639,10 +638,10 @@
         }
       },
       "ANY_TRANSACTION": {
-        "PART_1": "Send transaction ({{amount||'0'}} ETH) from your management address",
+        "PART_1": "Send transaction ({{amount||'0'}} DUCX) from your management address",
         "PART_2": "To contract address",
         "PART_3": "With Data field",
-        "PART_GUEST": "Send transaction ({{amount||'0'}} ETH) to contract address",
+        "PART_GUEST": "Send transaction ({{amount||'0'}} DUCX) to contract address",
         "GAS_LIMIT": "Gas limit"
       },
       "ACTIVATE": {
@@ -667,9 +666,9 @@
         "AIRDROP_DESCRIPTION": "To make a deposit of {{coinName}} tokens to Airdrop contract, please do the following steps:",
         "LIST": {
           "ITEM_1": "Open your wallet (Parity, <a href=\"{{depositUrl}}\" target=\"_blank\">MyEtherWallet</a>)",
-          "ITEM_2": "Choose Send Ether & Tokens tab in your wallet",
+          "ITEM_2": "Choose Send DucatusX & Tokens tab in your wallet",
           "ITEM_3": "Insert the following recipient's address:",
-          "ITEM_4": "Specify how much {{coinName || 'ETH'}} you want to send (Amount to Send field)",
+          "ITEM_4": "Specify how much {{coinName || 'DUCX'}} you want to send (Amount to Send field)",
           "ITEM_5": "Specify Gas limit {{gasLimit || 30000}}",
           "ITEM_6": "Click generate Transaction",
           "ITEM_7": "Confirm the payment by pressing the button \"{{'BUTTONS.DONE'|translate}}\""
@@ -735,7 +734,7 @@
       },
       "SEND_FUNDS": {
         "TITLE": "Send Funds",
-        "DESCRIPTION": "For sending ({{amount}} ETH) to Destination address ({{address}}) please make the following steps:"
+        "DESCRIPTION": "For sending ({{amount}} DUCX) to Destination address ({{address}}) please make the following steps:"
       },
       "GET_TOKENS": {
         "TITLE": "Get tokens",
@@ -899,13 +898,13 @@
         "FIELDS": {
           "MANAGEMENT_ADDR": {
             "LABEL": "Management address",
-            "PLACEHOLDER": "Enter your ETH wallet address",
+            "PLACEHOLDER": "Enter your DUCX wallet address",
             "DESCRIPTION": "Owner of this address will be able to manage the contract (it's the only one)"
           },
           "SEND_TO_WALLET": {
             "LABEL": "Send to wallet",
             "PLACEHOLDER": "Enter the address of the recipient's wallet",
-            "DESCRIPTION": "Enter the recipient's ETH address. This address will get transfer."
+            "DESCRIPTION": "Enter the recipient's DUCX address. This address will get transfer."
           },
           "NOTIFICATION_EMAIL": {
             "LABEL": "E-mail for notification",
@@ -924,7 +923,7 @@
         "FIELDS": {
           "MANAGEMENT_ADDR": {
             "LABEL": "Management address:",
-            "PLACEHOLDER": "Enter your ETH wallet address",
+            "PLACEHOLDER": "Enter your DUCX wallet address",
             "DESCRIPTION": "Owner of this address will be able to manage the contract (it's the only one)"
           },
           "TOKEN_ADDRESS_ON_OFF": {
@@ -941,7 +940,7 @@
           },
           "SOFT_CAP": {
             "LABEL": "Pool volume (minimum)",
-            "DESCRIPTION": "Defines minimum ETH needed for investments. If minimum is not reached - contributors get their ETHs back. You can set it to 0 (no minimum)."
+            "DESCRIPTION": "Defines minimum DUCX needed for investments. If minimum is not reached - contributors get their DUCXs back. You can set it to 0 (no minimum)."
           },
           "START_DATE": {
             "LABEL": "Start date",
@@ -961,7 +960,7 @@
           },
           "MIN_MAX_INVESTMENTS": {
             "LABEL": "Min & Max investments limitations",
-            "DESCRIPTION": "You can specify minimum/maximum accepted contributions (in {{currency||'ETH'}}). For example, accept contributions from 0.05 {{currency||'ETH'}} to 3000 {{currency||'ETH'}} only"
+            "DESCRIPTION": "You can specify minimum/maximum accepted contributions (in {{currency||'DUCX'}}). For example, accept contributions from 0.05 {{currency||'DUCX'}} to 3000 {{currency||'DUCX'}} only"
           },
           "MIN_INVESTMENTS": {
             "LABEL": "Minimum",
@@ -977,7 +976,7 @@
           },
           "INVESTMENT_ADDRESS": {
             "LABEL": "Destination address:",
-            "DESCRIPTION": "ETH address for sending all funds from the pool. It can be Contract address. Double check it before the submission."
+            "DESCRIPTION": "DUCX address for sending all funds from the pool. It can be Contract address. Double check it before the submission."
           },
           "BONUS": {
             "LABEL": "Personal bonus (in Tokens) for the pool's owner:",
@@ -1013,7 +1012,7 @@
         "FIELDS": {
           "MANAGEMENT_ADDR": {
             "LABEL": "Management address",
-            "PLACEHOLDER": "Enter your ETH wallet address",
+            "PLACEHOLDER": "Enter your DUCX wallet address",
             "DESCRIPTION": "Owner of this address will be able to manage the contract (it's the only one)"
           },
           "RESERVE_ADDRESS": {
@@ -1055,7 +1054,7 @@
           "MANAGEMENT_ADDR": {
             "LABEL": "Management address",
             "PLACEHOLDER": "Enter your {{networkName}} wallet address",
-            "ETH_DESCRIPTION": "ETH address (not exchange address). This address will manage the will contract. Double check the address (and access to it) before submission",
+            "ETH_DESCRIPTION": "DUCX address (not exchange address). This address will manage the will contract. Double check the address (and access to it) before submission",
             "RSK_DESCRIPTION": "This address will manage your contract. You can create it by <a tabindex=\"-1\" href=\"https://jaxx.io/\" target=\"_blank\">Jaxx</a> wallet. Double check it before submission."
           },
           "YOUR_EMAIL": {
@@ -1066,7 +1065,7 @@
           "BENEFICIARY_ADDR": {
             "LABEL": "Beneficiary address",
             "PLACEHOLDER": "Enter {{networkName}} address",
-            "ETH_DESCRIPTION": "Enter ETH address of beneficiary. After contract execution funds will be sent to that address.",
+            "ETH_DESCRIPTION": "Enter DUCX address of beneficiary. After contract execution funds will be sent to that address.",
             "RSK_DESCRIPTION": "Enter RSK address of beneficiary. After contract execution funds will be sent to that address. Heir can create it by <a tabindex=\"-1\" href=\"https://jaxx.io/\" target=\"_blank\">jaxx</a> too."
           },
           "SHARE": {
@@ -1147,12 +1146,12 @@
         "FIELDS": {
           "TOKEN_NAME": {
             "LABEL": "Token name:",
-            "DESCRIPTION": "Enter name of the project without spaces, usually 5-25 symbols. Lower and uppercase can be used"
+            "DESCRIPTION": "Enter name of the project without spaces, usually 8 symbols. Lower and uppercase can be used"
           },
           "TOKEN_SYMBOL": {
             "LABEL": "Token symbol:",
-            "DESCRIPTION": "Usually 3-4 Letters like ETH, BTC, NEO, WISH etc.. Please check that it’s unique before submission (<a tabindex=\"-1\" href=\"https://etherscan.com/tokens\" target=\"_blank\">https://etherscan.com/tokens</a>)",
-            "DESCRIPTION_TRON": "Usually 3-4 Letters like ETH, BTC, NEO, WISH etc..",
+            "DESCRIPTION": "Usually 3-4 Letters like DUCX, BTC, NEO, WISH etc.. Please check that it’s unique before submission",
+            "DESCRIPTION_TRON": "Usually 3-4 Letters like DUCX, BTC, NEO, WISH etc..",
             "DESCRIPTION_NEO": "This symbol SHOULD be short (3-8 characters is recommended), with no whitespace characters or new-lines and SHOULD be limited to the uppercase latin alphabet (i.e. the 26 letters used in English)"
           },
           "DECIMALS": {
@@ -1161,8 +1160,8 @@
           },
           "TOKEN_TYPE": {
             "LABEL": "Choose Type of Token",
-            "DESCRIPTION_1": "ERC-20 is recommended option. Accepted by the most exchanges.",
-            "DESCRIPTION_2": "ERC-223 is almost the same as ERC-20. Provides extra safety during token transfers."
+            "DESCRIPTION_1": "DRC-20 is recommended option. Accepted by the most exchanges.",
+            "DESCRIPTION_2": "DRC-223 is almost the same as DRC-20. Provides extra safety during token transfers."
           },
           "TOKEN_OWNER": {
             "LABEL": "Token Owner",
@@ -1195,7 +1194,7 @@
           },
           "AUTHIO": {
             "LABEL": "Branded report",
-            "DESCRIPTION": "Branded report is needed for exchanges and gives the estimation of the security of your token contract. Every contract is verified independently. Please <a href=\"https://www.oceanico.io/audit-reports/Sample-of-audit-report.pdf\" target=\"_blank\">check the example</a>. <br/><b>Branded report cost is 3 ETH</b>.",
+            "DESCRIPTION": "Branded report is needed for exchanges and gives the estimation of the security of your token contract. Every contract is verified independently. Please <a href=\"https://www.oceanico.io/audit-reports/Sample-of-audit-report.pdf\" target=\"_blank\">check the example</a>. <br/><b>Branded report cost is 3 DUCX</b>.",
             "SECOND_DESCRIPTION": "<a href=\"https://www.oceanico.io\" target=\"_blank\">This service</a> is run by independent US based company specialised in&nbsp;security analyze.",
             "EMAIL_LABEL": "To request a branded report please enter your email",
             "EMAIL_DESCRIPTION": "At this address you will receive an branded report of your contract. Please be careful and check it again.",
@@ -1241,7 +1240,7 @@
           },
           "STORAGE_ADDRESS": {
             "LABEL": "Investments Storage Address",
-            "DESCRIPTION": "ETH address (not exchange address). All contributions will be sent to that address after finish date if soft cap is reached. Double check the address before entering it"
+            "DESCRIPTION": "DUCX address (not exchange address). All contributions will be sent to that address after finish date if soft cap is reached. Double check the address before entering it"
           },
           "TOKEN_RATE": {
             "LABEL": "Token rate",
@@ -1282,7 +1281,7 @@
           },
           "MIN_MAX_INVESTMENTS": {
             "LABEL": "Min & Max investments limitations",
-            "DESCRIPTION": "You can specify minimum/maximum accepted contributions (in {{currency||'ETH'}}). For example, accept contributions from 0.05 {{currency||'ETH'}} to 3000 {{currency||'ETH'}} only."
+            "DESCRIPTION": "You can specify minimum/maximum accepted contributions (in {{currency||'DUCX'}}). For example, accept contributions from 0.05 {{currency||'DUCX'}} to 3000 {{currency||'DUCX'}} only."
           },
           "MIN_INVESTMENTS": {
             "LABEL": "Minimum",
@@ -1322,7 +1321,7 @@
             "LABEL": "Max Amount",
             "DESCRIPTION": "Maximum contribution for getting specified bonus{{last ? ' (you can left it empty if there is no limit)' : ''}}"
           },
-          "AMOUNT_BONUS_DESCRIPTION": "You can define bonus depending on contribution Amount. For example, give extra 5% tokens for 10+ ETH contributions"
+          "AMOUNT_BONUS_DESCRIPTION": "You can define bonus depending on contribution Amount. For example, give extra 5% tokens for 10+ DUCX contributions"
         }
       },
       "AIRDROP": {
@@ -1331,7 +1330,7 @@
         "FIELDS": {
           "MANAGEMENT_ADDR": {
             "LABEL": "Management address",
-            "PLACEHOLDER": "Enter your ETH wallet address",
+            "PLACEHOLDER": "Enter your DUCX wallet address",
             "DESCRIPTION": "Owner of this address will be able to manage the contract (it's the only one)"
           },
           "TOKEN_ADDR": {
@@ -1527,7 +1526,7 @@
           "AUDITED_DATE": "The planned date of the branded report: {{auditedDate|date:'yyyy-MM-dd'}}",
           "SUPPORT_DESCRIPTION": "If you have questions? you can send them to us at <a href=\"mailto:support@mywish.io\">support@mywish.io</a> or livechat.<br/> We will contact you as soon as possible.",
           "FORM_TEXTS": {
-            "PART_1": "Oceanico is a full service smart contract security firm focused of mitigating technical debt and security risk for projects building decentralised applications on Ethereum. <a href=\"https://www.oceanico.io/\" target=\"_blank\">Learn more</a>",
+            "PART_1": "Oceanico is a full service smart contract security firm focused of mitigating technical debt and security risk for projects building decentralised applications on DucatusX. <a href=\"https://www.oceanico.io/\" target=\"_blank\">Learn more</a>",
             "PART_2": "What you get:<br/> 1. A beautifully designed branded report with your company's branding (name, logo, URL)<br/> 2. A credible attestation that your token contracts have passed review and testing by security experts<br/> <a href=\"https://www.oceanico.io/audit-reports/Sample-of-audit-report.pdf\" target=\"_blank\">Check an example</a>"
           },
           "FORM_NOTICE": "The branded report will be delivered in 3 working days by email after the date of payment.",
@@ -1586,7 +1585,7 @@
           "PROGRESS": "Raised progress",
           "MIN": "min",
           "MAX": "max",
-          "TOTAL": "Total raised: {{amount}} {{currency || 'ETH'}}",
+          "TOTAL": "Total raised: {{amount}} {{currency || 'DUCX'}}",
           "DAY": "(Day: +{{percent}}%)"
         }
       },

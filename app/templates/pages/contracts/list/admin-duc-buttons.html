@@ -1,0 +1,24 @@
+<!-- Pay instruction button -->
+<button ng-click="payContract(contract)"
+        ng-if="contract.stateValue == 13 && currentUser.is_ducx_admin"
+        class="btn btn-transparent hide-ps">
+    <i class="icon-rocket-ship"></i>
+    <span translate="CONTRACTS_BUTTONS.LAUNCH"></span>
+</button>
+
+
+<!-- Cancel admin button -->
+<button ng-pop-up="{
+            template: '/templates/popups/confirmations/cancel-contract.html',
+            newPopupContent: true,
+            params: contract,
+            class: 'deleting-contract',
+            actions: {
+                unConfirmContract: unConfirmContract
+            }
+        }"
+        ng-if="contract.stateValue == 13 && currentUser.is_ducx_admin"
+        class="btn btn-transparent with-icon hide-ps">
+    <i class="icon-close-outline"></i>
+    <span translate="CONTRACTS_BUTTONS.CANCEL"></span>
+</button>

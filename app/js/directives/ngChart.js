@@ -1,6 +1,6 @@
 var module = angular.module('Directives');
 module.directive('ngChart', function($timeout) {
-    var colors = ['#206EFF', '#024EA1', '#FFD902', '#EE7023', 'rgb(29, 161, 2)', 'rgb(161, 2, 158)'];
+    var colors = ['#842734', '#024EA1', '#FFD902', '#EE7023', 'rgb(29, 161, 2)', 'rgb(161, 2, 158)'];
     return {
         restrict: 'A',
         replace: true,

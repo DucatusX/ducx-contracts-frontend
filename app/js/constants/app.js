@@ -3,73 +3,17 @@ module.constant('APP_CONSTANTS', {
     'TEMPLATES': {
         'PATH': '/templates'
     },
-    'WISH': {
-        'ADDRESS': '0x1b22c32cd936cb97c28c5690a0695a82abf688e6',
-        'TEST_ADDRESS': '0xa9CcA3bC3867C8D833682AF3Fec46Ad5bdF1A1b8'
-    },
-    'SWAP': {
-        'ADDRESS': '0xc958e9fb59724f8b0927426a8836f1158f0d03cf',
-        'TEST_ADDRESS': '0x88c37052d55112ac3CfE2b04d2d5663edCc4b2a4'
-    },
     'TEST_ADDRESSES': {
-        "ETH": "0xD0593B233Be4411A236F22b42087345E1137170b",
-        "EOS": "mywishtestac",
-        "TRON": "TRBeBGSyKrVMts1ZQz45JRu9mxCwEhgPSg",
-        "NEO": "AYhjNHgTs9sG8B2TbnRT5HxwTA2HAuhthq",
-        "RSK": "0xa441b5438885c9b5879e7dfa885b5d1b97216d69",
-        "BNB": "bnb108w2492d60yurmw6dvrvx8wlecnvuedsuysskq"
+        "DUCX": "0xD0593B233Be4411A236F22b42087345E1137170b"
     },
-    'EOS_ADDRESSES': {
-        'DEVELOPMENT': {
-            'MAINNET': {
-                'TOKEN': 'tokenfather2',
-                'ACCOUNT': 'mywishtoken4',
-                'AIRDROP': 'air.mywishio'
-            },
-            'TESTNET': {
-                'TOKEN': 'tokenfather2',
-                'ACCOUNT': 'mywishtoken3',
-                'AIRDROP': 'air.mywishio'
-            },
-            'COMING': 'mywishcoming'
-        },
-        'PRODUCTION': {
-            'MAINNET': {
-                'TOKEN': 'tokensfather',
-                'ACCOUNT': 'deploymywish',
-                'AIRDROP': 'wishairdrops'
-            },
-            'TESTNET': {
-                'TOKEN': 'tokensfather',
-                'ACCOUNT': 'mywishiotest',
-                'AIRDROP': 'wishairdrops'
-            },
-            'COMING': 'mywishcoming'
-        }
-    },
-    'INFURA_ADDRESS': "https://mainnet.infura.io/MEDIUMTUTORIAL",
-    'ROPSTEN_INFURA_ADDRESS': 'https://ropsten.infura.io/MEDIUMTUTORIAL',
+    'INFURA_ADDRESS': "http://212.24.108.89:8546",
+    'ROPSTEN_INFURA_ADDRESS': 'http://89.40.14.180:8545',
 
     'ETHERSCAN_ADDRESS': 'https://etherscan.io/',
     'ROPSTEN_ETHERSCAN_ADDRESS': 'https://ropsten.etherscan.io/',
-
-    'RSK_ADDRESS': 'https://explorer.rsk.co/',
-    'RSK_TESTNET_ADDRESS': 'https://explorer.testnet.rsk.co/',
-
-    'RSK_NET_ADDRESS': '/endpoint/rsk',
-    'RSK_TESTNET_NET_ADDRESS': '/endpoint/rsk-testnet',
-
-    "NEO_TESTNET_ADDRESS": 'http://neoscan.mywish.io/',
-    "NEO_MAINNET_ADDRESS": 'http://neoscan.mywish.io/',
-
-    "EOS_MAINNET_ADDRESS": "https://bloks.io/",
-    "EOS_TESTNET_ADDRESS": "https://jungle.bloks.io/",
-
-    "TRON_MAINNET_ADDRESS": "https://tronscan.org/",
-    "TRON_TESTNET_ADDRESS": "http://tronscan.mywish.io/",
-
-    "EOS_FLARE_MAINNET_ADDRESS": "https://eosflare.io/",
-
+    'TOKENS_ADDRESSES': {
+        'USDC': '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
+    },
     'EMPTY_PROFILE': {
         "email":"",
         "username":"",
@@ -90,15 +34,6 @@ module.constant('APP_CONSTANTS', {
         'FACEBOOK': '438113386623173'
     },
 
-    // For test
-    // 'SOCIAL_APP_ID': {
-    //     'GOOGLE': '364466470795-a5hkjeu1j743r7ado7u9lo7s89rc4r7q.apps.googleusercontent.com',
-    //     'FACEBOOK': '392887687850892'
-    // },
-    'PROMO_CODES': {
-        'MEETONE': 'MEETONE',
-        'EOSPARK': 'EOSPARK',
-        'LYNX': 'LYNX'
-    }
+    'PROMO_CODES': {}
 });
 
