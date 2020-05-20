@@ -6,8 +6,8 @@ module.constant('APP_CONSTANTS', {
     'TEST_ADDRESSES': {
         "DUCX": "0xD0593B233Be4411A236F22b42087345E1137170b"
     },
-    'INFURA_ADDRESS': "http://212.24.108.89:8546",
-    'ROPSTEN_INFURA_ADDRESS': 'http://89.40.14.180:8545',
+    'INFURA_ADDRESS': "https://ducx-node1.ducatus.com",
+    'ROPSTEN_INFURA_ADDRESS': 'https://ducx-testnet-node1.ducatus.com/',
 
     'ETHERSCAN_ADDRESS': 'https://etherscan.io/',
     'ROPSTEN_ETHERSCAN_ADDRESS': 'https://ropsten.etherscan.io/',
