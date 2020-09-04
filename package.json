@@ -62,7 +62,7 @@
     "node-sass": "^4.9.0",
     "npm": "^6.4.1",
     "object-assign": "^4.1.1",
-    "papaparse": "^4.5.0",
+    "papaparse": "^5.2.0",
     "qrious": "^4.0.2",
     "ua-parser-js": "^0.7.17",
     "wallet-address-validator": "^0.1.7",
